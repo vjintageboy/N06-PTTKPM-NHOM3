@@ -1,0 +1,29 @@
+{
+    "name": "n06-pttkpm-nhom3",
+    "version": "1.0.0",
+    "description": "Phan mem quan ly sinh vien",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon server.js"
+    },
+    "keywords": [],
+    "author": "Nhom03_PTTKPM (N06)",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vjintageboy/N06-PTTKPM-NHOM3.git"
+    },
+    "bugs": {
+        "url": "https://github.com/vjintageboy/N06-PTTKPM-NHOM3/issues"
+    },
+    "homepage": "https://github.com/vjintageboy/N06-PTTKPM-NHOM3#readme",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    }
+}
