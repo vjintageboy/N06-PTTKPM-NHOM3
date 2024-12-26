@@ -13,7 +13,6 @@ exports.login = async (email, password) => {
                 message: "Không tìm thấy tài khoản",
             };
         }
-
         // So sánh mật khẩu
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
@@ -32,7 +31,7 @@ exports.login = async (email, password) => {
         );
 
         // Trả về token
-        return { success: true, token };
+        return { success: true, token, user };
     } catch (err) {
         console.error(err);
         throw new Error("Lỗi khi xử lý đăng nhập");

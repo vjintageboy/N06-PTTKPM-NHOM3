@@ -21,7 +21,8 @@ const loginController = async (req, res) => {
         // Trả về token khi đăng nhập thành công
         return res.status(200).json({
             message: "Đăng nhập thành công",
-            token: result.token,
+
+            data: result,
         });
     } catch (err) {
         console.error(err);
