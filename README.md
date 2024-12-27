@@ -38,6 +38,9 @@
 #### 7. Quản lý tài khoản:
 - Có thể thêm, sửa, xóa tài khoản của các người dùng(sinh viên, quản lý khoa).
 
+#### 8. Đăng ký các môn học:
+- Đăng ký, chỉnh sửa các môn học 
+
 
 ---
 
