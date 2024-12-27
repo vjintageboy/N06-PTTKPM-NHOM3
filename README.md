@@ -16,22 +16,28 @@
   - Các dịch vụ khác.
 
 ### Chức Năng
-#### 1. Quản lý thông tin cá nhân:
-- Thêm, sửa, xóa thông tin cá nhân và học tập.
+#### 1. Tra cứu điểm:
+- Tra cứu điểm của mình qua hệ thống.
 
-#### 2. Quản lý điểm số:
-- Nhập, cập nhật, tra cứu điểm theo môn học, khóa học.
+#### 2. Quản lý thông tin cá nhân:
+- Cập nhật và xem thông tin cá nhân.
 
-#### 3. Quản lý khóa học và môn học:
-- Tạo, cập nhật thông tin khóa học, môn học.
-- Phân công giảng viên, thiết lập lịch học.
+#### 3. Quản lý thông tin sinh viên:
+- Quản lý thông tin chi tiết của sinh viên.
+- Cập nhật, sửa, xóa thông tin.
 
-#### 4. Quản lý thông tin sinh viên:
-- Tạo và quản lý các nhóm học tập, lớp học.
+#### 4. Quản lý điểm sinh viên:
+- Có thể cập nhật và xem điểm sinh viên.
 
-#### 5. Bảo mật:
-- Xác thực người dùng, phân quyền truy cập.
-- Mã hóa dữ liệu nhạy cảm và bảo vệ khỏi truy cập trái phép.
+#### 5. Quản lý khoa:
+- Có thể thêm, sửa, xóa thông tin về các khoa trong trường.
+
+#### 6. Quản lý môn học:
+- Có thể thêm, sửa hoặc xóa thông tin về các môn học của sinh viên.
+
+#### 7. Quản lý tài khoản:
+- Có thể thêm, sửa, xóa tài khoản của các người dùng(sinh viên, quản lý khoa).
+
 
 ---
 
