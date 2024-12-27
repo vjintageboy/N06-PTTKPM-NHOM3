@@ -8,7 +8,7 @@
 ## Yêu Cầu Tổ Chức Chương Trình Chính
 
 ### Công Nghệ
-- **Giao diện người dùng**: HTML, CSS, JavaScript.
+- **Giao diện người dùng**: Reactjs.
 - **Xử lý phía server**: Node.js.
 - **Cơ sở dữ liệu**: MongoDB.
 - **Tích hợp**: Sử dụng API để liên kết với:
