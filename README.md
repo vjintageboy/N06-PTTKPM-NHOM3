@@ -16,7 +16,7 @@
   - Các dịch vụ khác.
 
 ### Chức Năng
-#### 1. Quản lý thông tin sinh viên:
+#### 1. Quản lý thông tin cá nhân:
 - Thêm, sửa, xóa thông tin cá nhân và học tập.
 
 #### 2. Quản lý điểm số:
@@ -26,7 +26,7 @@
 - Tạo, cập nhật thông tin khóa học, môn học.
 - Phân công giảng viên, thiết lập lịch học.
 
-#### 4. Quản lý nhóm sinh viên:
+#### 4. Quản lý thông tin sinh viên:
 - Tạo và quản lý các nhóm học tập, lớp học.
 
 #### 5. Bảo mật:
