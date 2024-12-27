@@ -13,7 +13,6 @@
 - **Cơ sở dữ liệu**: MongoDB.
 - **Tích hợp**: Sử dụng API để liên kết với:
   - Hệ thống học tập trực tuyến (LMS).
-  - Thanh toán học phí.
   - Các dịch vụ khác.
 
 ### Chức Năng
