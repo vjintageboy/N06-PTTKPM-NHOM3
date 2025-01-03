@@ -3,18 +3,31 @@ const router = express.Router();
 const gradeController = require("../controllers/gradeController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.post("/", authMiddleware(["admin"]), gradeController.createGrade);
-router.get(
+router.post(
     "/",
     authMiddleware(["admin", "manager"]),
-    gradeController.getGrades
+    gradeController.addGrade
 );
-router.get(
+// router.get(
+//     "/",
+//     authMiddleware(["admin", "manager"]),
+//     gradeController.getGrades
+// );
+// router.get(
+//     "/:id",
+//     authMiddleware(["admin", "manager"]),
+//     gradeController.getGradeById
+// );
+router.get("/student/:studentId", gradeController.getGradesByStudent);
+router.put(
     "/:id",
     authMiddleware(["admin", "manager"]),
-    gradeController.getGradeById
+    gradeController.updateGrade
 );
-router.put("/:id", authMiddleware(["admin"]), gradeController.updateGrade);
-router.delete("/:id", authMiddleware(["admin"]), gradeController.deleteGrade);
+router.delete(
+    "/:id",
+    authMiddleware(["admin", "manager"]),
+    gradeController.deleteGrade
+);
 
 module.exports = router;

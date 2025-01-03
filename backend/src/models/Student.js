@@ -27,15 +27,7 @@ const studentSchema = new mongoose.Schema(
             ref: "Department",
             required: true,
         },
-        grades: [
-            {
-                subject: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "Subject",
-                },
-                score: { type: Number },
-            },
-        ],
+
         enrollmentYear: {
             type: Number,
             required: true,

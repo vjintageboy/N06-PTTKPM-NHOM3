@@ -2,7 +2,9 @@
 const Department = require("../models/Department");
 
 const getAllDepartments = async () => {
-    return await Department.find(); // Lấy tất cả các khoa
+    return await Department.find()
+        .populate("manager", "name email role") // Lấy thông tin từ User (chỉ lấy trường name, email, role)
+        .exec(); // Lấy tất cả các khoa
 };
 
 const getDepartmentById = async (id) => {

@@ -29,4 +29,22 @@ const loginController = async (req, res) => {
         res.status(500).json({ message: "Lỗi máy chủ", error: err.message });
     }
 };
-module.exports = loginController;
+const getCurrentUser = async (req, res) => {
+    try {
+        // Lấy thông tin user từ `req.user` (gắn bởi middleware xác thực)
+
+        const userId = req.user.id; // `req.user` chứa thông tin giải mã từ token
+        const user = await authService.getUserById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ user });
+    } catch (error) {
+        console.error("Error fetching current user:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+module.exports = { loginController, getCurrentUser };
