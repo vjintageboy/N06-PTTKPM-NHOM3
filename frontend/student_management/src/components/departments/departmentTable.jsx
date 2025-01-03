@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { deleteDepartment, getAllDepartment } from "../../services/api";
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Table } from "antd";
 import AddNewDepartment from "./addNewDepartmentUser";
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
 import UpdateDepartment from "./updateDepartment";
@@ -43,7 +43,7 @@ const DepartmentTable = () => {
                         placement="leftTop"
                         title={"Xác nhận xóa khoa"}
                         description={"Bạn có chắc chắn muốn xóa khoa này ?"}
-                        onConfirm={() => deleteDepartment(record.id)}
+                        onConfirm={() => handleDelete(record.id)}
                         okText="Xác nhận"
                         cancelText="Hủy"
                     >
@@ -69,6 +69,10 @@ const DepartmentTable = () => {
         if (res.data) {
             setListDepartments(res.data);
         }
+    };
+    const handleDelete = async (id) => {
+        await deleteDepartment(id);
+        fetchDepartments();
     };
 
     const data = listDepartments.map((department) => {

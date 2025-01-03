@@ -23,3 +23,9 @@ export const updateDepartment = (id, code, name, manager) => {
 export const deleteDepartment = (id) => {
     return axios.delete(`/api/departments/${id}`);
 };
+
+// user
+export const getAvailableManagers = () => {
+    return axios.get("/api/users/managers/available");
+};
+// môn học

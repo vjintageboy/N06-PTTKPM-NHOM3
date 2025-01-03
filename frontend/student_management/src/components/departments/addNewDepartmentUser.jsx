@@ -1,11 +1,21 @@
-import { useState } from "react";
-import { Divider, Form, Input, message, Modal, notification } from "antd";
-import { addNewDepartment } from "../../services/api";
+import { useEffect, useState } from "react";
+import {
+    Divider,
+    Form,
+    Input,
+    message,
+    Modal,
+    notification,
+    Select,
+} from "antd";
+import { addNewDepartment, getAvailableManagers } from "../../services/api";
+import { Option } from "antd/es/mentions";
 
 const AddNewDepartment = (props) => {
     const { openModalCreate, setOpenModalCreate } = props;
 
     const [isSubmit, setIsSubmit] = useState(false);
+    const [managers, setManagers] = useState([]);
 
     // https://ant.design/components/form#components-form-demo-control-hooks
     const [form] = Form.useForm();
@@ -27,6 +37,16 @@ const AddNewDepartment = (props) => {
         }
         setIsSubmit(false);
     };
+    const fetchManagers = async () => {
+        const res = await getAvailableManagers();
+
+        if (res && res.data) {
+            setManagers(res.data);
+        }
+    };
+    useEffect(() => {
+        fetchManagers();
+    }, [managers]);
 
     return (
         <>
@@ -81,6 +101,7 @@ const AddNewDepartment = (props) => {
                         labelCol={{ span: 24 }}
                         label="Quản lý"
                         name="manager"
+
                         // rules={[
                         //     {
                         //         required: true,
@@ -88,7 +109,16 @@ const AddNewDepartment = (props) => {
                         //     },
                         // ]}
                     >
-                        <Input />
+                        <Select placeholder="Select manager">
+                            {managers.map((manager) => (
+                                <Select.Option
+                                    key={manager._id}
+                                    value={manager._id}
+                                >
+                                    {manager.name}
+                                </Select.Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                 </Form>
             </Modal>
