@@ -1,5 +1,5 @@
 const User = require("../models/User");
-
+const Department = require("../models/Department");
 // Lấy danh sách tất cả người dùng
 const getAllUsers = async (req, res) => {
     try {
@@ -103,4 +103,43 @@ const deleteUser = async (req, res) => {
         res.status(500).json({ message: "Lỗi server", error: err });
     }
 };
-module.exports = { getAllUsers, addUser, updateUser, deleteUser };
+
+const getAvailableManagers = async (req, res) => {
+    try {
+        // Lấy tất cả user có vai trò là manager
+        const managers = await User.find({ role: "manager" });
+
+        // Lấy danh sách manager đã được gán quản lý khoa
+        const departments = await Department.find({}).populate(
+            "manager",
+            "_id"
+        );
+
+        const assignedManagerIds = departments.map((dept) =>
+            dept.manager?._id.toString()
+        );
+
+        // Lọc ra các manager chưa quản lý khoa
+        const availableManagers = managers.filter(
+            (manager) => !assignedManagerIds.includes(manager._id.toString())
+        );
+
+        res.status(200).json({
+            success: true,
+            data: availableManagers,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+            error,
+        });
+    }
+};
+module.exports = {
+    getAllUsers,
+    addUser,
+    updateUser,
+    deleteUser,
+    getAvailableManagers,
+};

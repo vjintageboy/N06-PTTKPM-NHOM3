@@ -15,4 +15,11 @@ router.put("/:id", authMiddleware(["admin"]), userController.updateUser);
 // Xóa người dùng
 router.delete("/:id", authMiddleware(["admin"]), userController.deleteUser);
 
+// lấy danh sách người dùng có role là manager còn trống
+router.get(
+    "/managers/available",
+    authMiddleware(["admin"]),
+    userController.getAvailableManagers
+);
+
 module.exports = router;

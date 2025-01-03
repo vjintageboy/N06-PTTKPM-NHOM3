@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "student",
     }, // manager: quản lý khoa, admin: phòng đào tạo
-    department: { type: String }, // Chỉ áp dụng cho quản lý khoa
+    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" }, // Liên kết tới Department // Chỉ áp dụng cho quản lý khoa
 });
 
 // // Mã hóa mật khẩu trước khi lưu

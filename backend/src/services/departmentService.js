@@ -1,5 +1,6 @@
 // services/departmentService.js
 const Department = require("../models/Department");
+const User = require("../models/User");
 
 const getAllDepartments = async () => {
     return await Department.find()
@@ -17,7 +18,30 @@ const createDepartment = async (data) => {
 };
 
 const updateDepartment = async (id, data) => {
-    return await Department.findByIdAndUpdate(id, data, { new: true }); // Cập nhật thông tin khoa
+    const { code, name, manager } = data;
+
+    // Cập nhật khoa
+    const department = await Department.findByIdAndUpdate(
+        id,
+        { code, name, manager },
+        { new: true }
+    );
+
+    if (!department) throw new Error("Khoa không tồn tại!");
+
+    // Cập nhật thông tin của User quản lý khoa
+    if (manager) {
+        // Đảm bảo user cũ không còn liên kết với khoa này
+        await User.updateMany(
+            { department: id },
+            { $unset: { department: "" } }
+        );
+
+        // Gán khoa cho user mới
+        await User.findByIdAndUpdate(manager, { department: id });
+    }
+
+    return department;
 };
 
 const deleteDepartment = async (id) => {
