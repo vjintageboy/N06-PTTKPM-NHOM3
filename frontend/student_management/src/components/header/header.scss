@@ -1,0 +1,20 @@
+.header-container {
+    display: flex;
+    justify-content: center;
+    background-color: aqua;
+    .header-content {
+        width: 1600px;
+        display: flex;
+        justify-content: space-between;
+        .header-logo {
+            width: 100px;
+            img {
+                width: 100%;
+                border-radius: 50%;
+            }
+        }
+        .user-login {
+            align-self: center;
+        }
+    }
+}

@@ -35,6 +35,7 @@ export const accountSlide = createSlice({
             state.isAuthenticated = true;
             state.isLoading = false;
             state.user = action.payload.user;
+            console.log(state.user);
         },
 
         doLogoutAction: (state, action) => {
