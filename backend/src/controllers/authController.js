@@ -47,4 +47,18 @@ const getCurrentUser = async (req, res) => {
     }
 };
 
-module.exports = { loginController, getCurrentUser };
+const logoutUser = async (req, res) => {
+    try {
+        // Xóa token phía client, backend chỉ gửi phản hồi
+        res.status(200).json({
+            success: true,
+            message: "Đăng xuất thành công",
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Có lỗi xảy ra khi đăng xuất",
+        });
+    }
+};
+module.exports = { loginController, getCurrentUser, logoutUser };

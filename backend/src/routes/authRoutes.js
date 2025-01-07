@@ -6,5 +6,6 @@ const router = express.Router();
 // Đăng nhập
 router.post("/login", authController.loginController);
 router.get("/login", authMiddleware(), authController.getCurrentUser);
+router.post("/logout", authController.logoutUser);
 
 module.exports = router;
