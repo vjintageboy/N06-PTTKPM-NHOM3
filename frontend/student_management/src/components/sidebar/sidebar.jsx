@@ -8,15 +8,28 @@ import {
     ProfileOutlined,
     UserOutlined,
     HomeOutlined,
+    LogoutOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Layout, Menu, message, Popconfirm, theme } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { callLogout } from "../../services/api";
 const { Header, Sider, Content } = Layout;
 const SideBar = (props) => {
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        const res = await callLogout();
+        if (res) {
+            message.success("Đăng xuất thành công");
+            localStorage.removeItem("access_token");
+            navigate("/login");
+        } else {
+            message.error(res.message);
+        }
+    };
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -46,6 +59,19 @@ const SideBar = (props) => {
                         <BookOutlined />
                         <span>Môn học</span>
                         <Link to="/subjects" />
+                    </Menu.Item>
+                    <Menu.Item key="6">
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Xác nhận đăng xuất"}
+                            description={"Bạn có chắc chắn muốn đăng xuất ?"}
+                            onConfirm={() => handleLogout()}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                        >
+                            <LogoutOutlined />
+                            <span>Đăng xuất</span>
+                        </Popconfirm>
                     </Menu.Item>
                 </Menu>
             </Sider>

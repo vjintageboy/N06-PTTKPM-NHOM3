@@ -88,14 +88,25 @@ const DepartmentTable = () => {
     }, []);
     return (
         <>
-            <Button
-                icon={<PlusOutlined />}
-                type="primary"
-                onClick={() => setOpenModalCreate(true)}
-            >
-                Thêm mới
-            </Button>
-            <Table columns={columns} dataSource={data} />
+            <div className="header-content">
+                <Button
+                    icon={<PlusOutlined />}
+                    type="primary"
+                    onClick={() => setOpenModalCreate(true)}
+                >
+                    Thêm mới
+                </Button>
+            </div>
+
+            <Table
+                columns={columns}
+                dataSource={data}
+                pagination={{
+                    defaultPageSize: 5,
+                    showSizeChanger: true,
+                    pageSizeOptions: ["5", "10", "20", "30"],
+                }}
+            />
             <AddNewDepartment
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}

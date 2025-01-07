@@ -7,7 +7,9 @@ export const callLogin = (email, password) => {
         password,
     });
 };
-
+export const callLogout = () => {
+    return axios.post("/api/auth/logout");
+};
 // department
 export const getAllDepartment = () => {
     return axios.get("/api/departments/");
