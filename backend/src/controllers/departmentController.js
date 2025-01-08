@@ -59,10 +59,32 @@ const deleteDepartment = async (req, res) => {
         res.status(500).json({ message: "Server error", error });
     }
 };
+
+const searchDepartments = async (req, res) => {
+    try {
+        const { query } = req.query;
+        const result = await departmentService.searchDepartments(query);
+
+        if (result.success) {
+            res.status(200).json(result);
+        } else {
+            res.status(400).json({
+                success: false,
+                message: "Không tìm thấy dữ liệu",
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message || "Có lỗi xảy ra khi tìm kiếm",
+        });
+    }
+};
 module.exports = {
     getAllDepartments,
     getDepartmentById,
     createDepartment,
     updateDepartment,
     deleteDepartment,
+    searchDepartments,
 };

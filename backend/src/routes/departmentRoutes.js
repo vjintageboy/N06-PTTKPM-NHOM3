@@ -10,11 +10,11 @@ router.get(
     authMiddleware(["admin"]),
     departmentController.getAllDepartments
 ); // Lấy danh sách tất cả khoa
-router.get(
-    "/:id",
-    authMiddleware(["admin", "manager"]),
-    departmentController.getDepartmentById
-); // Lấy thông tin chi tiết khoa
+// router.get(
+//     "/:id",
+//     authMiddleware(["admin", "manager"]),
+//     departmentController.getDepartmentById
+// ); // Lấy thông tin chi tiết khoa
 router.post(
     "/",
     authMiddleware(["admin"]),
@@ -30,5 +30,11 @@ router.delete(
     authMiddleware(["admin"]),
     departmentController.deleteDepartment
 ); // Xóa khoa
+// tìm kiếm khoa
+router.get(
+    "/search",
+    authMiddleware(["admin"]),
+    departmentController.searchDepartments
+);
 
 module.exports = router;

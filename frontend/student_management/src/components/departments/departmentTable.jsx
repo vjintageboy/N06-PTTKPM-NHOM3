@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { deleteDepartment, getAllDepartment } from "../../services/api";
-import { Button, Popconfirm, Table } from "antd";
+import {
+    deleteDepartment,
+    getAllDepartment,
+    searchDepartments,
+} from "../../services/api";
+import { Button, Input, Popconfirm, Table } from "antd";
 import AddNewDepartment from "./addNewDepartmentUser";
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
 import UpdateDepartment from "./updateDepartment";
@@ -10,6 +14,7 @@ const DepartmentTable = () => {
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
     const [listDepartments, setListDepartments] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const columns = [
         {
@@ -64,8 +69,8 @@ const DepartmentTable = () => {
         },
     ];
 
-    const fetchDepartments = async () => {
-        const res = await getAllDepartment();
+    const fetchDepartments = async (query) => {
+        const res = await searchDepartments(query);
         if (res.data) {
             setListDepartments(res.data);
         }
@@ -84,11 +89,31 @@ const DepartmentTable = () => {
         };
     });
     useEffect(() => {
-        fetchDepartments();
+        fetchDepartments("");
     }, []);
     return (
         <>
-            <div className="header-content">
+            <div
+                className="header-content"
+                style={{ display: "flex", justifyContent: "space-between" }}
+            >
+                <div
+                    className="search"
+                    style={{ display: "flex", gap: "10px" }}
+                >
+                    <Input
+                        placeholder="Nhập tên hoặc mã khoa"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <Button
+                        type="primary"
+                        onClick={() => fetchDepartments(searchQuery)}
+                    >
+                        Tìm kiếm
+                    </Button>
+                </div>
+
                 <Button
                     icon={<PlusOutlined />}
                     type="primary"

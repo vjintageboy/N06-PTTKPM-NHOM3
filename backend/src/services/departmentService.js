@@ -47,10 +47,26 @@ const updateDepartment = async (id, data) => {
 const deleteDepartment = async (id) => {
     return await Department.findByIdAndDelete(id); // Xóa khoa
 };
+
+const searchDepartments = async (query) => {
+    try {
+        const departments = await Department.find({
+            $or: [
+                { name: { $regex: query, $options: "i" } },
+                { code: { $regex: query, $options: "i" } },
+            ],
+        });
+        return { success: true, data: departments };
+    } catch (error) {
+        console.error("Error in searchDepartments:", error);
+        throw new Error("Có lỗi xảy ra khi tìm kiếm");
+    }
+};
 module.exports = {
     getAllDepartments,
     getDepartmentById,
     createDepartment,
     updateDepartment,
     deleteDepartment,
+    searchDepartments,
 };

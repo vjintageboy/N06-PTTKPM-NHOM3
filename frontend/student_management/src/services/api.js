@@ -25,6 +25,9 @@ export const updateDepartment = (id, code, name, manager) => {
 export const deleteDepartment = (id) => {
     return axios.delete(`/api/departments/${id}`);
 };
+export const searchDepartments = (query) => {
+    return axios.get(`/api/departments/search?query=${query}`);
+};
 
 // user
 export const getAvailableManagers = () => {
