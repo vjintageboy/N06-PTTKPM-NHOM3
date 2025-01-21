@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Divider,
     Form,
@@ -8,14 +8,18 @@ import {
     notification,
     Select,
 } from "antd";
-import { addNewDepartment, getAvailableManagers } from "../../services/api";
-import { Option } from "antd/es/mentions";
+import { addNewDepartment } from "../../services/api";
 
 const AddNewDepartment = (props) => {
-    const { openModalCreate, setOpenModalCreate } = props;
+    const {
+        openModalCreate,
+        setOpenModalCreate,
+        managers,
+        setManagers,
+        fetchDepartments,
+    } = props;
 
     const [isSubmit, setIsSubmit] = useState(false);
-    const [managers, setManagers] = useState([]);
 
     // https://ant.design/components/form#components-form-demo-control-hooks
     const [form] = Form.useForm();
@@ -24,11 +28,13 @@ const AddNewDepartment = (props) => {
         const { code, name, manager } = values;
         setIsSubmit(true);
         const res = await addNewDepartment(code, name, manager);
+        console.log(values);
+
         if (res && res.data) {
             message.success("Tạo mới khoa thành công");
             form.resetFields();
             setOpenModalCreate(false);
-            await props.fetchDepartments();
+            fetchDepartments();
         } else {
             notification.error({
                 message: "Đã có lỗi xảy ra",
@@ -37,16 +43,6 @@ const AddNewDepartment = (props) => {
         }
         setIsSubmit(false);
     };
-    const fetchManagers = async () => {
-        const res = await getAvailableManagers();
-
-        if (res && res.data) {
-            setManagers(res.data);
-        }
-    };
-    useEffect(() => {
-        fetchManagers();
-    }, [managers]);
 
     return (
         <>

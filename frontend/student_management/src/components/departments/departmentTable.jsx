@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
     deleteDepartment,
     getAllDepartment,
+    getAvailableManagers,
     searchDepartments,
 } from "../../services/api";
 import { Button, Input, Popconfirm, Table } from "antd";
@@ -15,6 +16,7 @@ const DepartmentTable = () => {
     const [dataUpdate, setDataUpdate] = useState(null);
     const [listDepartments, setListDepartments] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [managers, setManagers] = useState([]);
 
     const columns = [
         {
@@ -68,12 +70,20 @@ const DepartmentTable = () => {
             ),
         },
     ];
+    const fetchManagers = async () => {
+        const res = await getAvailableManagers();
 
-    const fetchDepartments = async (query) => {
+        if (res && res.data) {
+            setManagers(res.data);
+        }
+    };
+
+    const fetchDepartments = async (query = "") => {
         const res = await searchDepartments(query);
         if (res.data) {
             setListDepartments(res.data);
         }
+        fetchManagers();
     };
     const handleDelete = async (id) => {
         await deleteDepartment(id);
@@ -136,6 +146,8 @@ const DepartmentTable = () => {
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
                 fetchDepartments={fetchDepartments}
+                managers={managers}
+                setManagers={setManagers}
             />
             <UpdateDepartment
                 openModalUpdate={openModalUpdate}
@@ -143,6 +155,8 @@ const DepartmentTable = () => {
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
                 fetchDepartments={fetchDepartments}
+                managers={managers}
+                setManagers={setManagers}
             />
         </>
     );

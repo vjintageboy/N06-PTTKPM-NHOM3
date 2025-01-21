@@ -11,11 +11,16 @@ import {
 import { getAvailableManagers, updateDepartment } from "../../services/api";
 
 const UpdateDepartment = (props) => {
-    const { openModalUpdate, setOpenModalUpdate, dataUpdate, setDataUpdate } =
-        props;
+    const {
+        openModalUpdate,
+        setOpenModalUpdate,
+        dataUpdate,
+        setDataUpdate,
+        managers,
+        setManagers,
+    } = props;
 
     const [isSubmit, setIsSubmit] = useState(false);
-    const [managers, setManagers] = useState([]);
 
     // https://ant.design/components/form#components-form-demo-control-hooks
     const [form] = Form.useForm();
@@ -39,17 +44,9 @@ const UpdateDepartment = (props) => {
         }
         setIsSubmit(false);
     };
-    const fetchManagers = async () => {
-        const res = await getAvailableManagers();
-
-        if (res && res.data) {
-            setManagers(res.data);
-        }
-    };
 
     useEffect(() => {
         form.setFieldsValue(dataUpdate);
-        fetchManagers();
     }, [dataUpdate]);
 
     return (

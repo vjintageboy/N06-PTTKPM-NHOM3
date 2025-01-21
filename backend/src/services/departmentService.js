@@ -14,6 +14,11 @@ const getDepartmentById = async (id) => {
 
 const createDepartment = async (data) => {
     const department = new Department(data);
+    // Cập nhật thông tin của User quản lý khoa
+    const { manager } = data;
+    if (manager) {
+        await User.findByIdAndUpdate(manager, { department: department });
+    }
     return await department.save(); // Tạo khoa mới
 };
 
@@ -45,6 +50,7 @@ const updateDepartment = async (id, data) => {
 };
 
 const deleteDepartment = async (id) => {
+    await User.updateMany({ department: id }, { $unset: { department: "" } });
     return await Department.findByIdAndDelete(id); // Xóa khoa
 };
 
@@ -55,7 +61,9 @@ const searchDepartments = async (query) => {
                 { name: { $regex: query, $options: "i" } },
                 { code: { $regex: query, $options: "i" } },
             ],
-        });
+        })
+            .populate("manager", "name email role") // Lấy thông tin từ User (chỉ lấy trường name, email, role)
+            .exec(); // Lấy tất cả các khoa;
         return { success: true, data: departments };
     } catch (error) {
         console.error("Error in searchDepartments:", error);

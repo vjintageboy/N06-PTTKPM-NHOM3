@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import {
     MenuFoldOutlined,
@@ -34,28 +34,32 @@ const SideBar = (props) => {
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="demo-logo-vertical" />
-                <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
-                    <Menu.Item key="1">
+                <Menu
+                    theme="light"
+                    mode="inline"
+                    selectedKeys={[window.location.pathname]}
+                >
+                    <Menu.Item key="/">
                         <HomeOutlined />
                         <span>Trang chủ</span>
                         <Link to="/" />
                     </Menu.Item>
-                    <Menu.Item key="2">
+                    <Menu.Item key="/profile">
                         <ProfileOutlined />
                         <span>Profile</span>
                         <Link to="/profile" />
                     </Menu.Item>
-                    <Menu.Item key="3">
+                    <Menu.Item key="/departments">
                         <AppstoreOutlined />
                         <span>Khoa</span>
                         <Link to="/departments" />
                     </Menu.Item>
-                    <Menu.Item key="4">
+                    <Menu.Item key="/students">
                         <UserOutlined />
                         <span>Sinh viên</span>
                         <Link to="/students" />
                     </Menu.Item>
-                    <Menu.Item key="5">
+                    <Menu.Item key="/subjects">
                         <BookOutlined />
                         <span>Môn học</span>
                         <Link to="/subjects" />
@@ -69,8 +73,10 @@ const SideBar = (props) => {
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
-                            <LogoutOutlined />
-                            <span>Đăng xuất</span>
+                            <div>
+                                <LogoutOutlined />
+                                <span>Đăng xuất</span>
+                            </div>
                         </Popconfirm>
                     </Menu.Item>
                 </Menu>
