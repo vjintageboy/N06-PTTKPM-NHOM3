@@ -6,7 +6,7 @@ const createSubject = async (subjectData) => {
 };
 
 const getAllSubjects = async () => {
-    return await Subject.find();
+    return await Subject.find().populate("department", "code name").exec();
 };
 
 const getSubjectById = async (id) => {

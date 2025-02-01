@@ -8,16 +8,15 @@ import {
     notification,
     Select,
 } from "antd";
-import { getAvailableManagers, updateDepartment } from "../../services/api";
+import { updateSubject } from "../../services/api";
 
-const UpdateDepartment = (props) => {
+const UpdateSubject = (props) => {
     const {
         openModalUpdate,
         setOpenModalUpdate,
+        fetchSubjects,
+        departments,
         dataUpdate,
-        setDataUpdate,
-        managers,
-        setManagers,
     } = props;
 
     const [isSubmit, setIsSubmit] = useState(false);
@@ -26,18 +25,16 @@ const UpdateDepartment = (props) => {
     const [form] = Form.useForm();
 
     const onFinish = async (values) => {
-        const { id, code, name, manager } = values;
-        console.log(manager);
-
+        const { id, code, name, credits, department } = values;
         setIsSubmit(true);
-        const res = await updateDepartment(id, code, name, manager);
-        console.log(res);
+        console.log(values);
+        const res = await updateSubject(id, code, name, credits, department);
 
         if (res && res.data) {
-            message.success("Cập nhật khoa thành công");
+            message.success("Cập nhật môn học thành công");
             form.resetFields();
             setOpenModalUpdate(false);
-            await props.fetchDepartments();
+            fetchSubjects();
         } else {
             notification.error({
                 message: "Đã có lỗi xảy ra",
@@ -46,7 +43,6 @@ const UpdateDepartment = (props) => {
         }
         setIsSubmit(false);
     };
-
     useEffect(() => {
         form.setFieldsValue(dataUpdate);
     }, [dataUpdate]);
@@ -54,16 +50,13 @@ const UpdateDepartment = (props) => {
     return (
         <>
             <Modal
-                title="Cập nhật thông tin khoa"
+                title="Cập nhật môn học"
                 open={openModalUpdate}
                 onOk={() => {
                     form.submit();
                 }}
-                onCancel={() => {
-                    setOpenModalUpdate(false);
-                    setDataUpdate(null);
-                }}
-                okText={"Cập nhật"}
+                onCancel={() => setOpenModalUpdate(false)}
+                okText={"Lưu"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}
             >
@@ -91,12 +84,12 @@ const UpdateDepartment = (props) => {
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Mã khoa"
+                        label="Mã môn học"
                         name="code"
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập mã khoa!",
+                                message: "Vui lòng nhập mã môn học!",
                             },
                         ]}
                     >
@@ -104,12 +97,12 @@ const UpdateDepartment = (props) => {
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Tên khoa"
+                        label="Tên môn học"
                         name="name"
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập tên khoa!",
+                                message: "Vui lòng nhập tên môn học!",
                             },
                         ]}
                     >
@@ -118,22 +111,35 @@ const UpdateDepartment = (props) => {
 
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Quản lý"
-                        name="manager"
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: "Vui lòng nhập số điện thoại!",
-                        //     },
-                        // ]}
+                        label="số tín chỉ"
+                        name="credits"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng nhập số tín chỉ!",
+                            },
+                        ]}
                     >
-                        <Select placeholder="Select manager">
-                            {managers.map((manager) => (
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        labelCol={{ span: 24 }}
+                        label="Khoa"
+                        name="department"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng nhập chọn khoa!",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Select department">
+                            {departments.map((department) => (
                                 <Select.Option
-                                    key={manager._id}
-                                    value={manager._id}
+                                    key={department._id}
+                                    value={department._id}
                                 >
-                                    {manager.name}
+                                    {department.name}
                                 </Select.Option>
                             ))}
                         </Select>
@@ -144,4 +150,4 @@ const UpdateDepartment = (props) => {
     );
 };
 
-export default UpdateDepartment;
+export default UpdateSubject;

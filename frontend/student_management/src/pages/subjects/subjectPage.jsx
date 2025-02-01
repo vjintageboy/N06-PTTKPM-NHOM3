@@ -1,7 +1,9 @@
+import SubjectTable from "../../components/subjects/subjectTable";
+
 const SubjectPage = () => {
     return (
         <>
-            <div>SubjectPage</div>
+            <SubjectTable />
         </>
     );
 };

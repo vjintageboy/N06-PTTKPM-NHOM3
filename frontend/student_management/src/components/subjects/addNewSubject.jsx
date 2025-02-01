@@ -8,16 +8,11 @@ import {
     notification,
     Select,
 } from "antd";
-import { addNewDepartment } from "../../services/api";
+import { addNewSubject } from "../../services/api";
 
-const AddNewDepartment = (props) => {
-    const {
-        openModalCreate,
-        setOpenModalCreate,
-        managers,
-        setManagers,
-        fetchDepartments,
-    } = props;
+const AddNewSubject = (props) => {
+    const { openModalCreate, setOpenModalCreate, fetchSubjects, departments } =
+        props;
 
     const [isSubmit, setIsSubmit] = useState(false);
 
@@ -25,16 +20,16 @@ const AddNewDepartment = (props) => {
     const [form] = Form.useForm();
 
     const onFinish = async (values) => {
-        const { code, name, manager } = values;
+        const { code, name, credits, department } = values;
         setIsSubmit(true);
-        const res = await addNewDepartment(code, name, manager);
+        const res = await addNewSubject(code, name, credits, department);
         console.log(values);
 
         if (res && res.data) {
-            message.success("Tạo mới khoa thành công");
+            message.success("Tạo mới môn học thành công");
             form.resetFields();
             setOpenModalCreate(false);
-            fetchDepartments();
+            fetchSubjects();
         } else {
             notification.error({
                 message: "Đã có lỗi xảy ra",
@@ -47,7 +42,7 @@ const AddNewDepartment = (props) => {
     return (
         <>
             <Modal
-                title="Thêm mới khoa"
+                title="Thêm mới môn học"
                 open={openModalCreate}
                 onOk={() => {
                     form.submit();
@@ -68,12 +63,12 @@ const AddNewDepartment = (props) => {
                 >
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Mã khoa"
+                        label="Mã môn học"
                         name="code"
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập mã khoa!",
+                                message: "Vui lòng nhập mã môn học!",
                             },
                         ]}
                     >
@@ -81,12 +76,12 @@ const AddNewDepartment = (props) => {
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Tên khoa"
+                        label="Tên môn học"
                         name="name"
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập tên khoa!",
+                                message: "Vui lòng nhập tên môn học!",
                             },
                         ]}
                     >
@@ -95,16 +90,35 @@ const AddNewDepartment = (props) => {
 
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="Quản lý"
-                        name="manager"
+                        label="số tín chỉ"
+                        name="credits"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng nhập số tín chỉ!",
+                            },
+                        ]}
                     >
-                        <Select placeholder="Select manager">
-                            {managers.map((manager) => (
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        labelCol={{ span: 24 }}
+                        label="Khoa"
+                        name="department"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng nhập chọn khoa!",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Select department">
+                            {departments.map((department) => (
                                 <Select.Option
-                                    key={manager._id}
-                                    value={manager._id}
+                                    key={department._id}
+                                    value={department._id}
                                 >
-                                    {manager.name}
+                                    {department.name}
                                 </Select.Option>
                             ))}
                         </Select>
@@ -115,4 +129,4 @@ const AddNewDepartment = (props) => {
     );
 };
 
-export default AddNewDepartment;
+export default AddNewSubject;

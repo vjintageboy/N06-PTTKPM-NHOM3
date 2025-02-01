@@ -8,7 +8,7 @@ const addSubject = async (req, res) => {
         const savedSubject = await subjectService.createSubject(subjectData);
         res.status(201).json({
             message: "Subject added successfully",
-            subject: savedSubject,
+            data: savedSubject,
         });
     } catch (error) {
         res.status(400).json({
@@ -22,7 +22,7 @@ const addSubject = async (req, res) => {
 const getAllSubjects = async (req, res) => {
     try {
         const subjects = await subjectService.getAllSubjects();
-        res.status(200).json(subjects);
+        res.status(200).json({ data: subjects });
     } catch (error) {
         res.status(500).json({
             message: "Failed to fetch subjects",
@@ -59,7 +59,7 @@ const updateSubject = async (req, res) => {
         }
         res.status(200).json({
             message: "Subject updated successfully",
-            subject: updatedSubject,
+            data: updatedSubject,
         });
     } catch (error) {
         res.status(400).json({

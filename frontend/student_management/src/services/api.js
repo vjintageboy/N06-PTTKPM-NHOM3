@@ -34,3 +34,21 @@ export const getAvailableManagers = () => {
     return axios.get("/api/users/managers/available");
 };
 // môn học
+
+export const getAllSubjects = () => {
+    return axios.get("/api/subjects/");
+};
+export const addNewSubject = (code, name, credits, department) => {
+    return axios.post("/api/subjects/", { code, name, credits, department });
+};
+export const updateSubject = (id, code, name, credits, department) => {
+    return axios.put(`/api/subjects/${id}`, {
+        code,
+        name,
+        credits,
+        department,
+    });
+};
+export const deleteSubject = (id) => {
+    return axios.delete(`/api/subjects/${id}`);
+};
