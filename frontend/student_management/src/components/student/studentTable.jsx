@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import {
-    getAllSubjects,
-    deleteSubject,
+    deleteStudent,
     getAllDepartment,
+    getAllStudent,
 } from "../../services/api";
 import { Button, Input, Popconfirm, Table } from "antd";
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
-import AddNewSubject from "./addNewSubject";
-import UpdateSubject from "./updateSubject";
-const SubjectTable = () => {
+import AddNewStudent from "./addnewStudent";
+import UpdateStudent from "./updateStudent";
+const StudentTable = () => {
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
-    const [listSubjects, setListSubjects] = useState([]);
+    const [listStudents, setListStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [departments, setDepartmemts] = useState([]);
     const columns = [
@@ -20,29 +20,40 @@ const SubjectTable = () => {
             title: "ID",
             dataIndex: "id",
             render: (text) => <a>{text}</a>,
+            hidden: true,
         },
         {
-            title: "Mã môn học",
-            dataIndex: "code",
-            key: "code",
+            title: "Mã sinh viên",
+            dataIndex: "studentID",
+            key: "studentID",
             render: (text) => <a>{text}</a>,
         },
         {
-            title: "Tên môn học",
+            title: "Họ và tên",
             dataIndex: "name",
             key: "name",
         },
         {
-            title: "số tín chỉ",
-            dataIndex: "credits",
-            key: "credits",
+            title: "Email",
+            dataIndex: "email",
+            key: "email",
         },
-
+        {
+            title: "Ngày sinh",
+            dataIndex: "dateOfBirth",
+            key: "dateOfBirth",
+        },
         {
             title: "Khoa",
             dataIndex: "department",
             key: "department",
         },
+        {
+            title: "Năm nhập học",
+            dataIndex: "enrollmentYear",
+            key: "enrollmentYear",
+        },
+
         {
             title: "Action",
             key: "action",
@@ -50,8 +61,10 @@ const SubjectTable = () => {
                 <>
                     <Popconfirm
                         placement="leftTop"
-                        title={"Xác nhận xóa môn học"}
-                        description={"Bạn có chắc chắn muốn xóa môn học này ?"}
+                        title={"Xác nhận xóa sinh viên"}
+                        description={
+                            "Bạn có chắc chắn muốn xóa sinh viên này ?"
+                        }
                         onConfirm={() => handleDelete(record.id)}
                         okText="Xác nhận"
                         cancelText="Hủy"
@@ -72,10 +85,10 @@ const SubjectTable = () => {
             ),
         },
     ];
-    const fetchSubjects = async () => {
-        const res = await getAllSubjects();
+    const fetchStudents = async () => {
+        const res = await getAllStudent();
         if (res.data) {
-            setListSubjects(res.data);
+            setListStudents(res.data);
         }
     };
     const fetchDepartments = async () => {
@@ -85,21 +98,23 @@ const SubjectTable = () => {
         }
     };
     const handleDelete = async (id) => {
-        await deleteSubject(id);
-        fetchSubjects();
+        await deleteStudent(id);
+        fetchStudents();
     };
 
-    const data = listSubjects.map((subject) => {
+    const data = listStudents.map((student) => {
         return {
-            id: subject._id,
-            code: subject.code,
-            name: subject.name,
-            credits: subject.credits,
-            department: subject.department ? subject.department.name : "",
+            id: student._id,
+            studentID: student.studentID,
+            name: student.name,
+            email: student.email,
+            dateOfBirth: student.dateOfBirth,
+            department: student.department ? student.department.name : "",
+            enrollmentYear: student.enrollmentYear,
         };
     });
     useEffect(() => {
-        fetchSubjects();
+        fetchStudents();
         fetchDepartments();
     }, []);
     return (
@@ -113,13 +128,13 @@ const SubjectTable = () => {
                     style={{ display: "flex", gap: "10px" }}
                 >
                     <Input
-                        placeholder="Nhập tên hoặc mã môn học"
+                        placeholder="Nhập tên hoặc mã sinh viên"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <Button
                         type="primary"
-                        onClick={() => fetchSubjects(searchQuery)}
+                        onClick={() => fetchStudents(searchQuery)}
                     >
                         Tìm kiếm
                     </Button>
@@ -142,16 +157,16 @@ const SubjectTable = () => {
                     pageSizeOptions: ["5", "10", "20", "30"],
                 }}
             />
-            <AddNewSubject
+            <AddNewStudent
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
-                fetchSubjects={fetchSubjects}
+                fetchStudents={fetchStudents}
                 departments={departments}
             />
-            <UpdateSubject
+            <UpdateStudent
                 openModalUpdate={openModalUpdate}
                 setOpenModalUpdate={setOpenModalUpdate}
-                fetchSubjects={fetchSubjects}
+                fetchStudents={fetchStudents}
                 departments={departments}
                 dataUpdate={dataUpdate}
             />
@@ -159,4 +174,4 @@ const SubjectTable = () => {
     );
 };
 
-export default SubjectTable;
+export default StudentTable;

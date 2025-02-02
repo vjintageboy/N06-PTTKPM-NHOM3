@@ -6,7 +6,7 @@ const addStudent = async (req, res) => {
         const newStudent = await studentService.addStudent(req.body);
         res.status(201).json({
             message: "Student added successfully",
-            student: newStudent,
+            data: newStudent,
         });
     } catch (error) {
         res.status(500).json({ message: "Server error", error });
@@ -17,7 +17,7 @@ const addStudent = async (req, res) => {
 const getStudents = async (req, res) => {
     try {
         const students = await studentService.getStudents();
-        res.status(200).json(students);
+        res.status(200).json({ data: students });
     } catch (error) {
         res.status(500).json({ message: "Server error", error });
     }
@@ -48,7 +48,7 @@ const updateStudent = async (req, res) => {
 
         res.status(200).json({
             message: "Student updated successfully",
-            student: updatedStudent,
+            data: updatedStudent,
         });
     } catch (error) {
         res.status(500).json({ message: "Server error", error });

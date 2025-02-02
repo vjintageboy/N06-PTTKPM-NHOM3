@@ -52,3 +52,46 @@ export const updateSubject = (id, code, name, credits, department) => {
 export const deleteSubject = (id) => {
     return axios.delete(`/api/subjects/${id}`);
 };
+
+// sinh vien
+export const getAllStudent = () => {
+    return axios.get("/api/students/");
+};
+export const addNewStudent = (
+    studentID,
+    name,
+    email,
+    dateOfBirth,
+    department,
+    enrollmentYear
+) => {
+    return axios.post("/api/students/", {
+        studentID,
+        name,
+        email,
+        dateOfBirth,
+        department,
+        enrollmentYear,
+    });
+};
+export const updateStudent = (
+    id,
+    studentID,
+    name,
+    email,
+    dateOfBirth,
+    department,
+    enrollmentYear
+) => {
+    return axios.put(`/api/students/${id}`, {
+        studentID,
+        name,
+        email,
+        dateOfBirth,
+        department,
+        enrollmentYear,
+    });
+};
+export const deleteStudent = (id) => {
+    return axios.delete(`/api/students/${id}`);
+};

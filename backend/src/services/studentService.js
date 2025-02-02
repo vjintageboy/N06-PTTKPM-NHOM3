@@ -1,14 +1,24 @@
 const Student = require("../models/Student");
+const moment = require("moment-timezone");
 
 // Thêm sinh viên mới
 const addStudent = async (studentData) => {
+    // Kiểm tra nếu có dateOfBirth thì chuyển về múi giờ Việt Nam
+    if (studentData.dateOfBirth) {
+        studentData.dateOfBirth = moment
+            .tz(studentData.dateOfBirth, "Asia/Ho_Chi_Minh")
+            .startOf("day") // 🔥 Đặt về 00:00:00 để không bị lệch giờ
+            .toDate();
+    }
+    console.log("Processed dateOfBirth:", studentData.dateOfBirth); // ✅ Kiểm tra giá trị trước khi lưu
+
     const newStudent = new Student(studentData);
     return await newStudent.save();
 };
 
 // Lấy danh sách tất cả sinh viên
 const getStudents = async () => {
-    return await Student.find().populate("department").populate("grades");
+    return await Student.find().populate("department"); /*.populate("grades");*/
 };
 
 // Lấy thông tin sinh viên theo ID
@@ -20,6 +30,12 @@ const getStudentById = async (studentId) => {
 
 // Cập nhật thông tin sinh viên
 const updateStudent = async (studentId, studentData) => {
+    // Kiểm tra nếu có dateOfBirth thì chuyển về múi giờ Việt Nam
+    if (studentData.dateOfBirth) {
+        studentData.dateOfBirth = moment
+            .tz(studentData.dateOfBirth, "Asia/Ho_Chi_Minh")
+            .toDate();
+    }
     return await Student.findByIdAndUpdate(studentId, studentData, {
         new: true,
     });

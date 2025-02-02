@@ -1,7 +1,9 @@
+import StudentTable from "../../components/student/studentTable";
+
 const StudentPage = () => {
     return (
         <>
-            <div>StudentPage</div>
+            <StudentTable />
         </>
     );
 };

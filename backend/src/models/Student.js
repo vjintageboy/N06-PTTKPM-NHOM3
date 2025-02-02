@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-timezone");
 
 const studentSchema = new mongoose.Schema(
     {
@@ -21,6 +22,16 @@ const studentSchema = new mongoose.Schema(
         dateOfBirth: {
             type: Date,
             required: true,
+            set: (value) => {
+                // Chuyển đổi về múi giờ Việt Nam khi lưu
+                return moment.tz(value, "Asia/Ho_Chi_Minh").toDate();
+            },
+            get: (value) => {
+                // Format khi lấy dữ liệu
+                return moment(value)
+                    .tz("Asia/Ho_Chi_Minh")
+                    .format("YYYY-MM-DD");
+            },
         },
         department: {
             type: mongoose.Schema.Types.ObjectId,
@@ -40,6 +51,8 @@ const studentSchema = new mongoose.Schema(
     },
     {
         timestamps: true, // Tự động thêm createdAt và updatedAt
+        toJSON: { getters: true }, // Quan trọng để get() hoạt động khi JSON.stringify()
+        toObject: { getters: true }, // Quan trọng khi dùng toObject()
     }
 );
 
