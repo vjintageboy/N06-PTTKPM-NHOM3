@@ -1,4 +1,5 @@
 const Student = require("../models/Student");
+const User = require("../models/User");
 const moment = require("moment-timezone");
 
 // Thêm sinh viên mới
@@ -45,6 +46,14 @@ const updateStudent = async (studentId, studentData) => {
 const deleteStudent = async (studentId) => {
     return await Student.findByIdAndDelete(studentId);
 };
+const getStudentsWithoutUser = async () => {
+    // Lấy danh sách ID của Student đã có tài khoản User
+    const userStudentIds = await User.find({
+        student: { $exists: true },
+    }).distinct("student");
+    // Lọc các Student chưa có tài khoản User
+    return Student.find({ _id: { $nin: userStudentIds } });
+};
 
 module.exports = {
     addStudent,
@@ -52,4 +61,5 @@ module.exports = {
     getStudents,
     updateStudent,
     deleteStudent,
+    getStudentsWithoutUser,
 };

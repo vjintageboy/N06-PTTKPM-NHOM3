@@ -3,8 +3,8 @@ const Department = require("../models/Department");
 // Lấy danh sách tất cả người dùng
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({}, "-password"); // Không trả về trường password
-        res.status(200).json(users);
+        const users = await User.find({}, "-password").populate("department"); // Không trả về trường password
+        res.status(200).json({ data: users });
     } catch (err) {
         res.status(500).json({ message: "Lỗi server", error: err });
     }
@@ -12,7 +12,7 @@ const getAllUsers = async (req, res) => {
 
 // Thêm người dùng mới
 const addUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, student } = req.body;
 
     if (!name || !email || !password || !role) {
         return res.status(400).json({
@@ -36,12 +36,13 @@ const addUser = async (req, res) => {
             email,
             password: hashedPassword,
             role,
+            student,
         });
 
         await newUser.save();
         res.status(201).json({
             message: "Người dùng đã được tạo thành công.",
-            user: newUser,
+            data: newUser,
         });
     } catch (err) {
         res.status(500).json({ message: "Lỗi server", error: err });
@@ -76,7 +77,7 @@ const updateUser = async (req, res) => {
 
         res.status(200).json({
             message: "Cập nhật thành công.",
-            user: updatedUser,
+            data: updatedUser,
         });
     } catch (err) {
         res.status(500).json({ message: "Lỗi server", error: err });
@@ -97,7 +98,7 @@ const deleteUser = async (req, res) => {
 
         res.status(200).json({
             message: "Người dùng đã được xóa.",
-            user: deletedUser,
+            data: deletedUser,
         });
     } catch (err) {
         res.status(500).json({ message: "Lỗi server", error: err });

@@ -69,10 +69,20 @@ const deleteStudent = async (req, res) => {
         res.status(500).json({ message: "Server error", error });
     }
 };
+
+const getStudentsWithoutUser = async (req, res) => {
+    try {
+        const students = await studentService.getStudentsWithoutUser();
+        res.status(200).json({ data: students });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 module.exports = {
     addStudent,
     getStudentById,
     getStudents,
     updateStudent,
     deleteStudent,
+    getStudentsWithoutUser,
 };

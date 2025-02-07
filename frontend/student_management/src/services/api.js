@@ -33,6 +33,26 @@ export const searchDepartments = (query) => {
 export const getAvailableManagers = () => {
     return axios.get("/api/users/managers/available");
 };
+export const getAllUsers = () => {
+    return axios.get("/api/users/");
+};
+export const addNewUser = (name, email, password, role, student) => {
+    return axios.post("/api/users/", {
+        name,
+        email,
+        password,
+        role,
+        student,
+    });
+};
+export const updateUser = (id, password) => {
+    return axios.put(`/api/users/${id}`, {
+        password,
+    });
+};
+export const deleteUser = (id) => {
+    return axios.delete(`/api/users/${id}`);
+};
 // môn học
 
 export const getAllSubjects = () => {
@@ -94,4 +114,7 @@ export const updateStudent = (
 };
 export const deleteStudent = (id) => {
     return axios.delete(`/api/students/${id}`);
+};
+export const getStudentWithoutUser = () => {
+    return axios.get("/api/students/students-without-user/");
 };

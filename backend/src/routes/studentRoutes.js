@@ -14,11 +14,7 @@ router.get(
     authMiddleware(["admin", "manager"]),
     studentController.getStudents
 );
-router.get(
-    "/:id",
-    authMiddleware(["admin", "manager"]),
-    studentController.getStudentById
-);
+
 router.put(
     "/:id",
     authMiddleware(["admin", "manager"]),
@@ -28,6 +24,16 @@ router.delete(
     "/:id",
     authMiddleware(["admin"]),
     studentController.deleteStudent
+);
+router.get(
+    "/students-without-user",
+    authMiddleware(["admin"]),
+    studentController.getStudentsWithoutUser
+);
+router.get(
+    "/:id",
+    authMiddleware(["admin", "manager"]),
+    studentController.getStudentById
 );
 
 module.exports = router;

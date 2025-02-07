@@ -56,4 +56,17 @@ const studentSchema = new mongoose.Schema(
     }
 );
 
+// Sau khi lưu (tạo mới hoặc cập nhật) một document Student,
+// cập nhật lại trường email cho tất cả User có liên kết với Student này.
+studentSchema.post("save", async function (doc, next) {
+    try {
+        // Sử dụng require bên trong hook để tránh circular dependency
+        const User = require("./User");
+        await User.updateMany({ student: doc._id }, { email: doc.email });
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = mongoose.model("Student", studentSchema);

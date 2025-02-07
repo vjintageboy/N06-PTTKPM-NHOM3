@@ -64,6 +64,11 @@ const SideBar = (props) => {
                         <span>Môn học</span>
                         <Link to="/subjects" />
                     </Menu.Item>
+                    <Menu.Item key="/users">
+                        <BookOutlined />
+                        <span>Tài khoản</span>
+                        <Link to="/users" />
+                    </Menu.Item>
                     <Menu.Item key="6">
                         <Popconfirm
                             placement="leftTop"

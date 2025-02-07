@@ -11,6 +11,7 @@ import GradePage from "./pages/grades/gradePage";
 import DashboardPage from "./pages/dashboard/dashboardPage";
 import SubjectPage from "./pages/subjects/subjectPage";
 import SideBar from "./components/sidebar/sidebar";
+import UserPage from "./pages/user/UserPage";
 
 const Layout = () => {
     return (
@@ -50,6 +51,10 @@ function App() {
                 {
                     path: "subjects",
                     element: <SubjectPage />,
+                },
+                {
+                    path: "users",
+                    element: <UserPage />,
                 },
             ],
         },

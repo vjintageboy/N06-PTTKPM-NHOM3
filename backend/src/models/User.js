@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name: { type: String },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     role: {
@@ -11,19 +11,29 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "student",
     }, // manager: quản lý khoa, admin: phòng đào tạo
-    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" }, // Liên kết tới Department // Chỉ áp dụng cho quản lý khoa
+    // Liên kết tới Department // Chỉ áp dụng cho quản lý khoa
+    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
+    // Thêm trường liên kết đến model Student cho user có role "student"
+    student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
 });
-
-// // Mã hóa mật khẩu trước khi lưu
-// userSchema.pre("save", async function (next) {
-//     if (!this.isModified("password")) return next();
-//     this.password = await bcrypt.hash(this.password, 10);
-//     next();
-// });
-
-// // Xác minh mật khẩu
-// userSchema.methods.matchPassword = async function (password) {
-//     return await bcrypt.compare(password, this.password);
-// };
+// Trước khi lưu User, nếu role là "student" và có liên kết tới Student,
+// tự động cập nhật lại email của User từ email của Student.
+userSchema.pre("save", async function (next) {
+    if (this.role === "student" && this.student) {
+        try {
+            // Sử dụng require bên trong hook để tránh circular dependency
+            const Student = require("./Student");
+            const student = await Student.findById(this.student);
+            if (student) {
+                this.email = student.email;
+            }
+            next();
+        } catch (error) {
+            next(error);
+        }
+    } else {
+        next();
+    }
+});
 
 module.exports = mongoose.model("User", userSchema);
