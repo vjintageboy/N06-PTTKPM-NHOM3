@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import {
     MenuFoldOutlined,
@@ -13,6 +13,7 @@ import {
 import { Button, Layout, Menu, message, Popconfirm, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { callLogout } from "../../services/api";
+import { UserContext } from "../../context/userContext";
 const { Header, Sider, Content } = Layout;
 const SideBar = (props) => {
     const [collapsed, setCollapsed] = useState(false);
@@ -20,9 +21,11 @@ const SideBar = (props) => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
     const navigate = useNavigate();
+    const { user, logout } = useContext(UserContext);
     const handleLogout = async () => {
         const res = await callLogout();
         if (res) {
+            logout();
             message.success("Đăng xuất thành công");
             localStorage.removeItem("access_token");
             navigate("/login");
@@ -49,26 +52,56 @@ const SideBar = (props) => {
                         <span>Profile</span>
                         <Link to="/profile" />
                     </Menu.Item>
-                    <Menu.Item key="/departments">
-                        <AppstoreOutlined />
-                        <span>Khoa</span>
-                        <Link to="/departments" />
-                    </Menu.Item>
-                    <Menu.Item key="/students">
-                        <UserOutlined />
-                        <span>Sinh viên</span>
-                        <Link to="/students" />
-                    </Menu.Item>
-                    <Menu.Item key="/subjects">
-                        <BookOutlined />
-                        <span>Môn học</span>
-                        <Link to="/subjects" />
-                    </Menu.Item>
-                    <Menu.Item key="/users">
-                        <BookOutlined />
-                        <span>Tài khoản</span>
-                        <Link to="/users" />
-                    </Menu.Item>
+                    {user && user.role === "admin" && (
+                        <>
+                            <Menu.Item key="/departments">
+                                <AppstoreOutlined />
+                                <span>Khoa</span>
+                                <Link to="/departments" />
+                            </Menu.Item>
+
+                            <Menu.Item key="/subjects">
+                                <BookOutlined />
+                                <span>Môn học</span>
+                                <Link to="/subjects" />
+                            </Menu.Item>
+                            <Menu.Item key="/users">
+                                <BookOutlined />
+                                <span>Tài khoản</span>
+                                <Link to="/users" />
+                            </Menu.Item>
+                        </>
+                    )}
+
+                    {user && user.role === "manager" && (
+                        <>
+                            <Menu.Item key="/students">
+                                <UserOutlined />
+                                <span>Sinh viên</span>
+                                <Link to="/students" />
+                            </Menu.Item>
+                            <Menu.Item key="/subjects">
+                                <BookOutlined />
+                                <span>Môn học</span>
+                                <Link to="/subjects" />
+                            </Menu.Item>
+                        </>
+                    )}
+                    {user && user.role === "student" && (
+                        <>
+                            <Menu.Item key="/subjects">
+                                <BookOutlined />
+                                <span>Môn học</span>
+                                <Link to="/subjects" />
+                            </Menu.Item>
+                            <Menu.Item key="/grades">
+                                <BookOutlined />
+                                <span>Bảng điểm</span>
+                                <Link to="/grades" />
+                            </Menu.Item>
+                        </>
+                    )}
+
                     <Menu.Item key="6">
                         <Popconfirm
                             placement="leftTop"
