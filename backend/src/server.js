@@ -9,6 +9,7 @@ const departmentRoutes = require("./routes/departmentRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const subjectRoutes = require("./routes/subjectRoutes");
 const gradeRoutes = require("./routes/gradeRoutes");
+const courseRegistrationRoutes = require("./routes/courseRegistrationRoutes");
 const cors = require("cors");
 
 app.get("/", (req, res) => {
@@ -33,6 +34,8 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/students/", studentRoutes);
 app.use("/api/subjects/", subjectRoutes);
 app.use("/api/grades/", gradeRoutes);
+app.use("/api/courseRegistrations", courseRegistrationRoutes);
+
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 });

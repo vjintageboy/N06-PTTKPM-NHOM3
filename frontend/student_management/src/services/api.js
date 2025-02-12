@@ -118,3 +118,15 @@ export const deleteStudent = (id) => {
 export const getStudentWithoutUser = () => {
     return axios.get("/api/students/students-without-user/");
 };
+
+// register course
+
+export const getAvailableSubjects = () => {
+    return axios.get("/api/courseRegistrations/available/");
+};
+export const getRegisteredSubjects = () => {
+    return axios.get("api/courseRegistrations/registered");
+};
+export const registerSubject = (subjectId) => {
+    return axios.post("api/courseRegistrations/register", { subjectId });
+};

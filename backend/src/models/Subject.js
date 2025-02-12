@@ -10,4 +10,5 @@ const subjectSchema = new mongoose.Schema({
     credits: { type: Number, required: true }, // Số tín chỉ
 });
 
-module.exports = mongoose.model("Subject", subjectSchema);
+module.exports =
+    mongoose.models.Subject || mongoose.model("Subject", subjectSchema);

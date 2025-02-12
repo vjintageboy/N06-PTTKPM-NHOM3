@@ -59,6 +59,11 @@ const SideBar = (props) => {
                                 <span>Khoa</span>
                                 <Link to="/departments" />
                             </Menu.Item>
+                            <Menu.Item key="/students">
+                                <UserOutlined />
+                                <span>Sinh viên</span>
+                                <Link to="/students" />
+                            </Menu.Item>
 
                             <Menu.Item key="/subjects">
                                 <BookOutlined />
@@ -89,10 +94,10 @@ const SideBar = (props) => {
                     )}
                     {user && user.role === "student" && (
                         <>
-                            <Menu.Item key="/subjects">
+                            <Menu.Item key="/registration">
                                 <BookOutlined />
-                                <span>Môn học</span>
-                                <Link to="/subjects" />
+                                <span>đăng ký môn học</span>
+                                <Link to="/registration" />
                             </Menu.Item>
                             <Menu.Item key="/grades">
                                 <BookOutlined />
