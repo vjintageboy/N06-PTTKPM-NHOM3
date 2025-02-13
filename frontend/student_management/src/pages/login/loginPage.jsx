@@ -1,15 +1,13 @@
 import { Button, Divider, Form, Input, message, notification } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { callLogin } from "../../services/api";
 import "./login.scss";
 import { useContext, useState } from "react";
-
 import { UserContext } from "../../context/userContext";
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const [isSubmit, setIsSubmit] = useState(false);
-
     const { login } = useContext(UserContext);
 
     const onFinish = async (values) => {
@@ -40,17 +38,18 @@ const LoginPage = () => {
                 <div className="container">
                     <section className="wrapper">
                         <div className="heading">
-                            <h2 className="text text-large">Đăng Nhập</h2>
+                            <h2 className="text text-large">Chào mừng trở lại!</h2>
+                            <p className="text text-normal">Vui lòng đăng nhập để tiếp tục</p>
                             <Divider />
                         </div>
                         <Form
-                            name="basic"
-                            // style={{ maxWidth: 600, margin: '0 auto' }}
+                            name="login"
                             onFinish={onFinish}
                             autoComplete="off"
+                            layout="vertical"
+                            className="login-form"
                         >
                             <Form.Item
-                                labelCol={{ span: 24 }} //whole column
                                 label="Email"
                                 name="email"
                                 rules={[
@@ -58,45 +57,45 @@ const LoginPage = () => {
                                         required: true,
                                         message: "Email không được để trống!",
                                     },
+                                    {
+                                        type: 'email',
+                                        message: "Email không đúng định dạng!",
+                                    }
                                 ]}
                             >
-                                <Input />
+                                <Input 
+                                    placeholder="name@example.com"
+                                    className="custom-input"
+                                />
                             </Form.Item>
 
                             <Form.Item
-                                labelCol={{ span: 24 }} //whole column
                                 label="Mật khẩu"
                                 name="password"
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            "Mật khẩu không được để trống!",
+                                        message: "Mật khẩu không được để trống!",
                                     },
                                 ]}
                             >
-                                <Input.Password />
+                                <Input.Password 
+                                    placeholder="Nhập mật khẩu"
+                                    className="custom-input"
+                                />
                             </Form.Item>
 
-                            <Form.Item
-                            // wrapperCol={{ offset: 6, span: 16 }}
-                            >
+                            <Form.Item>
                                 <Button
                                     type="primary"
                                     htmlType="submit"
                                     loading={isSubmit}
+                                    className="submit-button"
+                                    block
                                 >
                                     Đăng nhập
                                 </Button>
                             </Form.Item>
-                            <Divider>Or</Divider>
-                            <p className="text text-normal">
-                                Chưa có tài khoản ?
-                                <span>
-                                    <Link to="/register"> Đăng Ký </Link>
-                                </span>
-                            </p>
-                            <br />
                         </Form>
                     </section>
                 </div>

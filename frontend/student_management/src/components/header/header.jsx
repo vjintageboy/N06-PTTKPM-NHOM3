@@ -1,61 +1,63 @@
+import React, { useContext } from "react";
 import "./header.scss";
 import logo from "../../assets/pka-logo.jpg";
-import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { Dropdown, Menu, message } from "antd";
-import {
-    LogoutOutlined,
-    SettingOutlined,
-    UserOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined, SettingOutlined, DownOutlined } from "@ant-design/icons"; // Import Ant Design icons
 import { callLogout } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
-    const { user, logout } = useContext(UserContext);
-
-    const navigate = useNavigate();
-    // Xử lý đăng xuất: gọi hàm logout từ context và chuyển hướng về trang đăng nhập
-    const handleLogout = async () => {
+// Hàm xử lý đăng xuất
+const handleLogout = async (logout, navigate) => {
+    try {
         const res = await callLogout();
-        if (res) {
+        if (res.success) {
             logout();
             message.success("Đăng xuất thành công");
             localStorage.removeItem("access_token");
             navigate("/login");
         } else {
-            message.error(res.message);
+            message.error(res.message || "Đăng xuất thất bại");
         }
-    };
+    } catch {
+        message.error("Có lỗi xảy ra khi đăng xuất");
+    }
+};
 
-    // Xử lý đổi mật khẩu: chuyển hướng sang trang đổi mật khẩu (hoặc mở modal đổi mật khẩu)
-    const handleChangePassword = () => {
-        navigate("/change-password");
-    };
-    // Menu cho dropdown khi click vào tên người dùng
+// Hàm xử lý chuyển trang đổi mật khẩu
+const handleChangePassword = (navigate) => {
+    navigate("/change-password");
+};
+
+const Header = () => {
+    const { user, logout } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    // Tạo menu dropdown cho người dùng
     const userMenu = (
         <Menu>
             <Menu.Item
                 key="changePassword"
-                onClick={handleChangePassword}
+                onClick={() => handleChangePassword(navigate)}
                 icon={<SettingOutlined />}
             >
-                Đổi mật khẩu
+                <UserOutlined style={{ marginRight: 8 }} /> Đổi mật khẩu
             </Menu.Item>
             <Menu.Item
                 key="logout"
-                onClick={handleLogout}
+                onClick={() => handleLogout(logout, navigate)}
                 icon={<LogoutOutlined />}
             >
-                Đăng xuất
+                <LogoutOutlined style={{ marginRight: 8 }} /> Đăng xuất
             </Menu.Item>
         </Menu>
     );
+
     return (
         <div className="header-container">
             <div className="header-content">
                 <div className="header-logo">
-                    <img src={logo} alt="" />
+                    <img src={logo} alt="Logo" />
                 </div>
                 <div className="user-login">
                     {user ? (
@@ -69,7 +71,8 @@ const Header = () => {
                                 }}
                             >
                                 <UserOutlined style={{ marginRight: 8 }} />
-                                {user.name}
+                                <span style={{ fontWeight: 'bold', color: '#4db8ff', fontSize: '14px' }}>{user.name}</span>
+                                <DownOutlined style={{ marginLeft: 5 }} />
                             </div>
                         </Dropdown>
                     ) : (
@@ -81,4 +84,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default React.memo(Header);
