@@ -63,3 +63,20 @@ exports.registerCourse = async (studentId, subjectId) => {
     const registeredSubject = await Subject.findById(subjectId);
     return registeredSubject;
 };
+/**
+ * Hủy đăng ký một môn học cho sinh viên.
+ * @param {String} studentId - _id của sinh viên.
+ * @param {String} subjectId - _id của Subject.
+ * @returns Đối tượng đăng ký đã bị xóa.
+ * @throws Error nếu không tìm thấy đăng ký.
+ */
+exports.cancelRegistration = async (studentId, subjectId) => {
+    const deletedRegistration = await CourseRegistration.findOneAndDelete({
+        student: studentId,
+        subject: subjectId,
+    });
+    if (!deletedRegistration) {
+        throw new Error("Không tìm thấy đăng ký của môn học này");
+    }
+    return deletedRegistration;
+};

@@ -1,10 +1,11 @@
 // src/pages/SubjectRegistration.jsx
 import React, { useState, useEffect } from "react";
-import { Table, Button, message } from "antd";
+import { Table, Button, message, Popconfirm } from "antd";
 import {
     getAvailableSubjects,
     getRegisteredSubjects,
     registerSubject,
+    cancelRegistration,
 } from "../../services/api";
 
 const SubjectRegistration = () => {
@@ -71,6 +72,27 @@ const SubjectRegistration = () => {
             setLoading(false);
         }
     };
+    // Hàm hủy đăng ký môn học
+    const handleCancelRegistration = async (subjectId) => {
+        setLoading(true);
+
+        try {
+            const data = await cancelRegistration(subjectId);
+            console.log(data);
+
+            message.success(data.message || "Hủy đăng ký thành công");
+            // Làm mới danh sách sau khi hủy đăng ký
+            fetchAvailableSubjects();
+            fetchRegisteredSubjects();
+        } catch (error) {
+            console.error(error);
+            const errMsg =
+                error.response?.data?.message || "Hủy đăng ký thất bại";
+            message.error(errMsg);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Định nghĩa cột cho bảng
     const columns = [
@@ -89,15 +111,35 @@ const SubjectRegistration = () => {
             key: "action",
             render: (_, record) =>
                 record.status === "Chưa đăng ký" ? (
-                    <Button
-                        type="primary"
-                        onClick={() => handleRegister(record._id)}
-                        loading={loading}
+                    <Popconfirm
+                        placement="leftTop"
+                        title={"Xác nhận đăng ký môn học"}
+                        description={
+                            "Bạn có chắc chắn muốn đăng ký môn học này ?"
+                        }
+                        onConfirm={() => handleRegister(record._id)}
+                        okText="Xác nhận"
+                        cancelText="Hủy"
                     >
-                        Đăng ký
-                    </Button>
+                        <Button type="primary" loading={loading}>
+                            Đăng ký
+                        </Button>
+                    </Popconfirm>
                 ) : (
-                    <span>Đã đăng ký</span>
+                    <Popconfirm
+                        placement="leftTop"
+                        title={"Xác nhận hủy đăng ký môn học"}
+                        description={
+                            "Bạn có chắc chắn muốn hủy đăng ký môn học này ?"
+                        }
+                        onConfirm={() => handleCancelRegistration(record._id)}
+                        okText="Xác nhận"
+                        cancelText="Hủy"
+                    >
+                        <Button type="primary" danger loading={loading}>
+                            Hủy Đăng ký
+                        </Button>
+                    </Popconfirm>
                 ),
         },
     ];

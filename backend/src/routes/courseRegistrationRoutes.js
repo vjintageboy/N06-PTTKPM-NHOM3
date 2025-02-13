@@ -24,5 +24,10 @@ router.post(
     authMiddleware(["admin", "manager", "student"]),
     courseRegistrationController.registerCourse
 );
-
+// Hủy đăng ký môn học
+router.delete(
+    "/cancel",
+    authMiddleware(["admin", "manager", "student"]),
+    courseRegistrationController.cancelRegistration
+);
 module.exports = router;

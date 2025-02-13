@@ -40,8 +40,6 @@ exports.getRegisteredCourses = async (req, res) => {
 exports.registerCourse = async (req, res) => {
     try {
         const studentId = req.user.id;
-        console.log(studentId);
-
         // Thay đổi tên biến từ courseId thành subjectId
         const { subjectId } = req.body;
         const registeredSubject =
@@ -56,6 +54,28 @@ exports.registerCourse = async (req, res) => {
     } catch (error) {
         res.status(
             error.message === "Bạn đã đăng ký môn học này" ? 400 : 500
+        ).json({ message: error.message });
+    }
+};
+exports.cancelRegistration = async (req, res) => {
+    try {
+        const studentId = req.user.id;
+        const { subjectId } = req.body;
+
+        const deletedRegistration =
+            await courseRegistrationService.cancelRegistration(
+                studentId,
+                subjectId
+            );
+        res.status(200).json({
+            message: "Hủy đăng ký thành công",
+            deletedRegistration,
+        });
+    } catch (error) {
+        res.status(
+            error.message === "Không tìm thấy đăng ký của môn học này"
+                ? 404
+                : 500
         ).json({ message: error.message });
     }
 };

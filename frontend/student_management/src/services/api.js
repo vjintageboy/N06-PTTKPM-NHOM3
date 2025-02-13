@@ -130,3 +130,8 @@ export const getRegisteredSubjects = () => {
 export const registerSubject = (subjectId) => {
     return axios.post("api/courseRegistrations/register", { subjectId });
 };
+export const cancelRegistration = (subjectId) => {
+    return axios.delete("api/courseRegistrations/cancel", {
+        data: { subjectId },
+    });
+};

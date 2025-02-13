@@ -35,7 +35,12 @@ const SideBar = (props) => {
     };
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider
+                trigger={null}
+                collapsible
+                collapsed={collapsed}
+                style={{ backgroundColor: "white" }}
+            >
                 <div className="demo-logo-vertical" />
                 <Menu
                     theme="light"
