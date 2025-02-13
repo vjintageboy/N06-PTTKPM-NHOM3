@@ -16,7 +16,15 @@ import SubjectRegistration from "./pages/registration/SubjectRegistration";
 
 const Layout = () => {
     return (
-        <div className="layout-app">
+        <div
+            className="layout-app"
+            style={{
+                height: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+            }}
+        >
             <Header />
             <SideBar>
                 <Outlet />

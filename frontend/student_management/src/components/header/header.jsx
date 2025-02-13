@@ -3,7 +3,12 @@ import "./header.scss";
 import logo from "../../assets/pka-logo.jpg";
 import { UserContext } from "../../context/userContext";
 import { Dropdown, Menu, message } from "antd";
-import { UserOutlined, LogoutOutlined, SettingOutlined, DownOutlined } from "@ant-design/icons"; // Import Ant Design icons
+import {
+    UserOutlined,
+    LogoutOutlined,
+    SettingOutlined,
+    DownOutlined,
+} from "@ant-design/icons"; // Import Ant Design icons
 import { callLogout } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -71,7 +76,15 @@ const Header = () => {
                                 }}
                             >
                                 <UserOutlined style={{ marginRight: 8 }} />
-                                <span style={{ fontWeight: 'bold', color: '#4db8ff', fontSize: '14px' }}>{user.name}</span>
+                                <span
+                                    style={{
+                                        fontWeight: "bold",
+                                        color: "#4db8ff",
+                                        fontSize: "14px",
+                                    }}
+                                >
+                                    {user.name}
+                                </span>
                                 <DownOutlined style={{ marginLeft: 5 }} />
                             </div>
                         </Dropdown>
