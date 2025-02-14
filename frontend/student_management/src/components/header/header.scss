@@ -1,78 +1,78 @@
 // header.scss
 
 .header-container {
-    background: linear-gradient(90deg, #003366, #001529); // Gradient màu nền của header
-    padding: 10px 20px;
+    background: rgba(0, 32, 109, 0.85);
+    padding: 10px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Thêm bóng đổ cho header
-  }
-  
-  .header-content {
+}
+
+.header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-  }
-  
-  .header-logo {
+}
+
+.header-logo {
     img {
-      height: 40px; // Đặt chiều cao cho logo
-      width: auto;
+        height: 80px; // Đặt chiều cao cho logo
+        width: auto;
     }
-  }
-  
-  .user-login {
+}
+
+.user-login {
     display: flex;
     align-items: center;
     color: #e0e0e0; // Chỉnh màu chữ cho dễ đọc
     font-size: 18px; // Tăng kích thước chữ
-    font-family: 'Roboto', sans-serif; // Thay đổi font chữ
-  
+    font-family: "Roboto", sans-serif; // Thay đổi font chữ
+
     .ant-dropdown-trigger {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-  
-      &:hover {
-        color: #4db8ff; // Chỉnh màu khi hover vào tên người dùng
-        transition: color 0.3s ease; // Thêm hiệu ứng chuyển màu
-      }
-  
-      .anticon {
-        font-size: 18px;
-        margin-right: 8px;
-      }
-    }
-  
-    .ant-dropdown {
-      background-color: #001529;
-      border-radius: 5px;
-  
-      .ant-dropdown-menu {
-        background-color: #00274d; // Thay đổi màu nền dropdown
-        border-radius: 5px;
-        padding: 10px;
-  
-        .ant-dropdown-menu-item {
-          color: #e0e0e0; // Chỉnh màu chữ cho dễ đọc
-  
-          &:hover {
-            background-color: #4db8ff; // Thay đổi màu nền khi hover
-          }
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            color: #4db8ff; // Chỉnh màu khi hover vào tên người dùng
+            transition: color 0.3s ease; // Thêm hiệu ứng chuyển màu
         }
-      }
+
+        .anticon {
+            font-size: 18px;
+            margin-right: 8px;
+        }
     }
-  }
-  
-  // Định dạng cho phần thông báo lỗi và thành công
-  .message {
+
+    .ant-dropdown {
+        background-color: #001529;
+        border-radius: 5px;
+
+        .ant-dropdown-menu {
+            background-color: #00274d; // Thay đổi màu nền dropdown
+            border-radius: 5px;
+            padding: 10px;
+
+            .ant-dropdown-menu-item {
+                color: #e0e0e0; // Chỉnh màu chữ cho dễ đọc
+
+                &:hover {
+                    background-color: #4db8ff; // Thay đổi màu nền khi hover
+                }
+            }
+        }
+    }
+}
+
+// Định dạng cho phần thông báo lỗi và thành công
+.message {
     .ant-message-success {
-      background-color: #52c41a;
+        background-color: #52c41a;
     }
-  
+
     .ant-message-error {
-      background-color: #ff4d4f;
+        background-color: #ff4d4f;
     }
-  }
+}

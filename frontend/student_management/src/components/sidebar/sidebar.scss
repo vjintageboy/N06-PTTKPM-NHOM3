@@ -1,0 +1,15 @@
+.sideBar-item {
+    color: white !important;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.ant-layout-sider-children {
+    margin: 30px 0px;
+    .ant-menu-item {
+        margin: 12px 0px;
+    }
+    .ant-menu-item-selected {
+        color: #f8843d !important;
+        background-color: transparent !important;
+    }
+}

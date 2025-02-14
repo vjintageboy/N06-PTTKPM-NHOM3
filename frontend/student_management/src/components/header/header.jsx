@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./header.scss";
-import logo from "../../assets/pka-logo.jpg";
+import logo from "../../assets/logo.png";
 import { UserContext } from "../../context/userContext";
 import { Dropdown, Menu, message } from "antd";
 import {
