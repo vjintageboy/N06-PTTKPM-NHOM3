@@ -46,14 +46,14 @@ const Header = () => {
                 onClick={() => handleChangePassword(navigate)}
                 icon={<SettingOutlined />}
             >
-                <UserOutlined style={{ marginRight: 8 }} /> Đổi mật khẩu
+                Đổi mật khẩu
             </Menu.Item>
             <Menu.Item
                 key="logout"
                 onClick={() => handleLogout(logout, navigate)}
                 icon={<LogoutOutlined />}
             >
-                <LogoutOutlined style={{ marginRight: 8 }} /> Đăng xuất
+                 Đăng xuất
             </Menu.Item>
         </Menu>
     );

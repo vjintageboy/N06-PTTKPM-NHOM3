@@ -19,9 +19,13 @@ const Layout = () => {
         <div
             className="layout-app"
             style={{
-                height: "100vh",
+                height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                borderRadius: "16px", // Bo góc 16px
+                overflow: "hidden", // Đảm bảo nội dung không bị tràn ra ngoài viền bo
+                border: "2px solid #ffffff" // Thêm viền nếu cần
+                
             }}
         >
             <Header />

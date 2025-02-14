@@ -7,7 +7,7 @@ const FooterComponent = () => {
                 background: "rgba(0,32,109,0.85)",
             }}
         >
-            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+            Team Nhom 3 - PTTKPM - {new Date().getFullYear()} || Created by CX company
         </Footer>
     );
 };

@@ -34,7 +34,7 @@ const SideBar = (props) => {
         }
     };
     return (
-        <Layout>
+        <Layout style={{ minHeight: '100vh' }}>
             <Sider
                 trigger={null}
                 collapsible
@@ -148,6 +148,7 @@ const SideBar = (props) => {
                     style={{
                         padding: 0,
                         background: colorBgContainer,
+                        
                     }}
                 >
                     <Button
