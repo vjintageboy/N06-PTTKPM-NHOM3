@@ -1,12 +1,12 @@
 // header.scss
 
 .header-container {
-    background: rgba(0, 32, 109, 0.85);
+    // background: rgba(0, 32, 109, 0.85);
     padding: 10px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Thêm bóng đổ cho header
+    // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Thêm bóng đổ cho header
 }
 
 .header-content {
@@ -16,12 +16,12 @@
     width: 100%;
 }
 
-.header-logo {
-    img {
-        height: 80px; // Đặt chiều cao cho logo
-        width: auto;
-    }
-}
+// .header-logo {
+//     img {
+//         height: 80px; // Đặt chiều cao cho logo
+//         width: auto;
+//     }
+// }
 
 .user-login {
     display: flex;

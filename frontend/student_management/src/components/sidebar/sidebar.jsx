@@ -14,6 +14,10 @@ import { Button, Layout, Menu, message, Popconfirm, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { callLogout } from "../../services/api";
 import { UserContext } from "../../context/userContext";
+import logo from "../../assets/phenikaa-logo.jpg";
+import { Footer } from "antd/es/layout/layout";
+import HeaderComponent from "../header/header";
+
 const { Header, Sider, Content } = Layout;
 const SideBar = (props) => {
     const [collapsed, setCollapsed] = useState(false);
@@ -34,14 +38,15 @@ const SideBar = (props) => {
         }
     };
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout>
             <Sider
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
-                style={{ backgroundColor: "rgba(0,32,109,0.85)" }}
+                style={{
+                    backgroundColor: "rgba(0,32,109,0.85)",
+                }}
             >
-                <div className="demo-logo-vertical" />
                 <Menu
                     theme="light"
                     mode="inline"
@@ -148,7 +153,8 @@ const SideBar = (props) => {
                     style={{
                         padding: 0,
                         background: colorBgContainer,
-                        
+                        display: "flex",
+                        justifyContent: "space-between",
                     }}
                 >
                     <Button
@@ -167,7 +173,17 @@ const SideBar = (props) => {
                             height: 64,
                         }}
                     />
+                    <div
+                        style={{
+                            alignItems: "center",
+                            display: "flex",
+                        }}
+                    >
+                        <img src={logo} alt="" style={{ width: "180px" }} />
+                    </div>
+                    <HeaderComponent />
                 </Header>
+
                 <Content
                     style={{
                         margin: "24px 16px",
@@ -179,6 +195,13 @@ const SideBar = (props) => {
                 >
                     {props.children}
                 </Content>
+                <Footer
+                    style={{
+                        textAlign: "center",
+                    }}
+                >
+                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                </Footer>
             </Layout>
         </Layout>
     );

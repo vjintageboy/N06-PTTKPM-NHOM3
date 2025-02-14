@@ -53,7 +53,7 @@ const Header = () => {
                 onClick={() => handleLogout(logout, navigate)}
                 icon={<LogoutOutlined />}
             >
-                 Đăng xuất
+                Đăng xuất
             </Menu.Item>
         </Menu>
     );
@@ -61,16 +61,17 @@ const Header = () => {
     return (
         <div className="header-container">
             <div className="header-content">
-                <div className="header-logo">
+                {/* <div className="header-logo">
                     <img src={logo} alt="Logo" />
-                </div>
+                    
+                </div> */}
                 <div className="user-login">
                     {user ? (
                         <Dropdown overlay={userMenu} trigger={["click"]}>
                             <div
                                 style={{
                                     cursor: "pointer",
-                                    color: "#fff",
+                                    color: "#000",
                                     display: "flex",
                                     alignItems: "center",
                                 }}
@@ -79,7 +80,7 @@ const Header = () => {
                                 <span
                                     style={{
                                         fontWeight: "bold",
-                                        color: "#4db8ff",
+                                        color: "#000",
                                         fontSize: "14px",
                                     }}
                                 >
@@ -89,7 +90,7 @@ const Header = () => {
                             </div>
                         </Dropdown>
                     ) : (
-                        <div style={{ color: "#fff" }}>Chưa đăng nhập</div>
+                        <div style={{ color: "#000" }}>Chưa đăng nhập</div>
                     )}
                 </div>
             </div>
