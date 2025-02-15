@@ -10,13 +10,14 @@ import {
     HomeOutlined,
     LogoutOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, message, Popconfirm, theme } from "antd";
+import { Avatar, Button, Layout, Menu, message, Popconfirm, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { callLogout } from "../../services/api";
 import { UserContext } from "../../context/userContext";
 import logo from "../../assets/phenikaa-logo.jpg";
-import { Footer } from "antd/es/layout/layout";
+import avt from "../../assets/student-avt/male-avt.avif";
 import HeaderComponent from "../header/header";
+import FooterComponent from "../footer/footer";
 
 const { Header, Sider, Content } = Layout;
 const SideBar = (props) => {
@@ -40,6 +41,7 @@ const SideBar = (props) => {
     return (
         <Layout>
             <Sider
+                width={300}
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
@@ -53,6 +55,19 @@ const SideBar = (props) => {
                     selectedKeys={[window.location.pathname]}
                     style={{ backgroundColor: "transparent" }}
                 >
+                    <Menu.Item className="sideBar-item avatar">
+                        <Avatar size={50} src={avt} />
+                        <span
+                            style={{
+                                paddingLeft: "15px",
+                                color: "#000",
+                                fontSize: "20px",
+                            }}
+                        >
+                            {user.name}
+                        </span>
+                        <Link to="/" />
+                    </Menu.Item>
                     <Menu.Item key="/" className="sideBar-item">
                         <HomeOutlined />
                         <span>Trang chủ</span>
@@ -195,13 +210,7 @@ const SideBar = (props) => {
                 >
                     {props.children}
                 </Content>
-                <Footer
-                    style={{
-                        textAlign: "center",
-                    }}
-                >
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                </Footer>
+                <FooterComponent />
             </Layout>
         </Layout>
     );
