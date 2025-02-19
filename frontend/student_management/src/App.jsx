@@ -13,6 +13,7 @@ import SubjectPage from "./pages/subjects/subjectPage";
 import SideBar from "./components/sidebar/sidebar";
 import UserPage from "./pages/user/UserPage";
 import SubjectRegistration from "./pages/registration/SubjectRegistration";
+import StudentDetailPage from "./pages/students/studentDetailPage";
 
 const Layout = () => {
     return (
@@ -45,6 +46,10 @@ function App() {
                 {
                     path: "/students",
                     element: <StudentPage />,
+                },
+                {
+                    path: "/students/:slug",
+                    element: <StudentDetailPage />,
                 },
                 {
                     path: "/departments",

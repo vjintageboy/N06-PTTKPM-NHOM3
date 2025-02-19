@@ -5,9 +5,15 @@ import {
     getAllStudent,
 } from "../../services/api";
 import { Button, Input, Popconfirm, Table } from "antd";
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
+import {
+    DeleteTwoTone,
+    EditTwoTone,
+    EyeOutlined,
+    PlusOutlined,
+} from "@ant-design/icons";
 import AddNewStudent from "./addnewStudent";
 import UpdateStudent from "./updateStudent";
+import { useNavigate } from "react-router-dom";
 const StudentTable = () => {
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
@@ -15,6 +21,11 @@ const StudentTable = () => {
     const [listStudents, setListStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [departments, setDepartmemts] = useState([]);
+    const navigate = useNavigate();
+
+    const viewDetailStudent = (id) => {
+        navigate(`/students/${id}`);
+    };
     const columns = [
         {
             title: "ID",
@@ -69,17 +80,21 @@ const StudentTable = () => {
                         okText="Xác nhận"
                         cancelText="Hủy"
                     >
-                        <span style={{ cursor: "pointer", margin: "0 20px" }}>
+                        <span style={{ cursor: "pointer" }}>
                             <DeleteTwoTone twoToneColor="#ff4d4f" />
                         </span>
                     </Popconfirm>
                     <EditTwoTone
                         twoToneColor="#f57800"
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", margin: "0 20px" }}
                         onClick={() => {
                             setOpenModalUpdate(true);
                             setDataUpdate(record);
                         }}
+                    />
+                    <EyeOutlined
+                        style={{ cursor: "pointer" }}
+                        onClick={() => viewDetailStudent(record.id)}
                     />
                 </>
             ),

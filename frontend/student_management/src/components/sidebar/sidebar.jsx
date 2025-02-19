@@ -38,6 +38,7 @@ const SideBar = (props) => {
             message.error(res.message);
         }
     };
+    const currentPath = location.pathname.split("/")[1];
     return (
         <Layout>
             <Sider
@@ -52,7 +53,7 @@ const SideBar = (props) => {
                 <Menu
                     theme="light"
                     mode="inline"
-                    selectedKeys={[window.location.pathname]}
+                    selectedKeys={[`/${currentPath}`]}
                     style={{ backgroundColor: "transparent" }}
                 >
                     <Menu.Item className="sideBar-item avatar">
@@ -206,6 +207,7 @@ const SideBar = (props) => {
                         minHeight: 280,
                         background: colorBgContainer,
                         borderRadius: borderRadiusLG,
+                        overflow: "scroll",
                     }}
                 >
                     {props.children}

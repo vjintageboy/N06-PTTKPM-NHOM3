@@ -118,6 +118,9 @@ export const deleteStudent = (id) => {
 export const getStudentWithoutUser = () => {
     return axios.get("/api/students/students-without-user/");
 };
+export const getStudentById = (id) => {
+    return axios.get(`/api/students/${id}`);
+};
 
 // register course
 
