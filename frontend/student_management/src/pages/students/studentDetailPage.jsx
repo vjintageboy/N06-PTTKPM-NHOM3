@@ -1,35 +1,42 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getStudentById } from "../../services/api";
 import avt from "../../assets/student-avt/male-avt.avif";
 import { Card, Row, Col, Typography, Divider } from "antd";
 import StudentGradesOvrTable from "./studentGradeOvr";
+import { UserContext } from "../../context/userContext";
 
 const { Title, Text } = Typography;
 
 const StudentDetailPage = () => {
     const { slug } = useParams();
-    // // const [student, setStudent] = useState({});
-    // const callStudent = async (id) => {
-    //     const res = await getStudentById(id);
-    //     console.log(res);
+    const [studentData, setStudentData] = useState({});
+    const { user } = useContext(UserContext);
+    const callStudent = async (id) => {
+        const res = await getStudentById(id);
 
-    //     setStudent(res);
-    // };
-    // useEffect(() => {
-    //     callStudent(slug);
-    // }, []);
+        setStudentData(res);
+    };
+    useEffect(() => {
+        if (user.role === "admin" || user.role === "manager") {
+            callStudent(slug);
+        } else {
+            callStudent(user.student);
+        }
+    }, []);
 
     const student = {
-        avatar: `${avt}`, // Thay bằng link ảnh thật
-        studentId: "22010014",
+        avatar: `${avt}`,
+        studentId: `${studentData.studentID}`,
         fullName: "Nguyễn Cao",
-        firstName: "Chiến",
+        firstName: `${studentData.name}`,
         gender: "Nam",
-        birthDate: "23/01/2003",
-        email: "22010014@st.phenikaa-uni.edu.vn",
+        birthDate: `${studentData.dateOfBirth}`,
+        email: `${studentData.email}`,
         class: "K16-CNTT_4",
-        faculty: "Khoa Công nghệ Thông tin",
+        faculty: studentData.department
+            ? studentData.department.name
+            : "Chưa cập nhật",
         department: "Công nghệ thông tin",
         status: "Đang học",
         trainingSystem: "Đại học chính quy",
@@ -59,11 +66,11 @@ const StudentDetailPage = () => {
                                 <br />
                                 <Text>{student.studentId}</Text>
                             </Col>
-                            <Col span={8}>
+                            {/* <Col span={8}>
                                 <Text strong>Họ và đệm</Text>
                                 <br />
                                 <Text>{student.fullName}</Text>
-                            </Col>
+                            </Col> */}
                             <Col span={8}>
                                 <Text strong>Tên</Text>
                                 <br />
@@ -134,7 +141,7 @@ const StudentDetailPage = () => {
                 </Row>
                 <Divider style={{ borderTop: "3px solid #e56429" }} />
             </Card>
-            <StudentGradesOvrTable />
+            <StudentGradesOvrTable studentData={studentData} />
         </>
     );
 };

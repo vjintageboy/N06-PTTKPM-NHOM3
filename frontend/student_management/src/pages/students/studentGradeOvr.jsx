@@ -1,122 +1,73 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Table, Typography } from "antd";
+import { getGradeOfStudent } from "../../services/api";
 
 const { Title } = Typography;
 
-const columns = [
-    {
-        title: "",
-        dataIndex: "label",
-        key: "label",
-    },
-    {
-        title: "ĐIỂM TRUNG BÌNH CHUNG",
-        children: [
-            {
-                title: "Hệ 4",
-                dataIndex: "gpa4",
-                key: "gpa4",
-            },
-            {
-                title: "Hệ 10",
-                dataIndex: "gpa10",
-                key: "gpa10",
-            },
-        ],
-    },
-    {
-        title: "ĐIỂM TRUNG BÌNH TÍCH LUỸ",
-        children: [
-            {
-                title: "Hệ 4",
-                dataIndex: "cumulativeGpa4",
-                key: "cumulativeGpa4",
-            },
-            {
-                title: "Hệ 10",
-                dataIndex: "cumulativeGpa10",
-                key: "cumulativeGpa10",
-            },
-        ],
-    },
-];
+const StudentGradeOvr = (props) => {
+    const { studentData } = props;
+    const [grades, setGrades] = useState([]);
+    const fetchGrades = async () => {
+        const response = await getGradeOfStudent(studentData._id); // API lấy danh sách điểm
 
-const data = [
-    {
-        key: 1,
-        label: "Điểm",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-    {
-        key: 2,
-        label: "Số môn học lại",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-    {
-        key: 3,
-        label: "Số môn thi lại",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-    {
-        key: 4,
-        label: "STC học lại",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-    {
-        key: 5,
-        label: "STC thi lại",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-    {
-        key: 6,
-        label: "Tổng STC",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-    {
-        key: 7,
-        label: "STC tích luỹ",
-        gpa4: "",
-        gpa10: "",
-        cumulativeGpa4: "",
-        cumulativeGpa10: "",
-    },
-];
+        if (response && response.data) {
+            setGrades(response.data);
+        }
+    };
 
-const StudentGradesOvrTable = () => {
+    useEffect(() => {
+        fetchGrades();
+    }, [studentData]);
+
+    // Xử lý dữ liệu cho bảng
+    const processedData = grades.map((grade, index) => ({
+        key: index,
+        subject: grade.subject.name,
+        score4: grade.grade4,
+        score10: grade.averageScore,
+        status: grade.status === "Retake" ? "Học lại" : "Đạt",
+    }));
+    // Cột của bảng
+    const columns = [
+        {
+            title: "Môn học",
+            dataIndex: "subject",
+            key: "subject",
+        },
+        {
+            title: "Hệ 4",
+            dataIndex: "score4",
+            key: "score4",
+        },
+        {
+            title: "Hệ 10",
+            dataIndex: "score10",
+            key: "score10",
+        },
+        {
+            title: "Trạng thái",
+            dataIndex: "status",
+            key: "status",
+            render: (status) =>
+                status === "Học lại" ? (
+                    <span style={{ color: "red" }}>{status}</span>
+                ) : (
+                    <span style={{ color: "green" }}>{status}</span>
+                ),
+        },
+    ];
+
     return (
-        <div>
-            <Title
-                level={4}
-                style={{ textAlign: "center", marginBottom: "20px" }}
-            >
-                Bảng điểm
-            </Title>
+        <div style={{ padding: 20 }}>
+            <Title level={4}>Bảng Điểm</Title>
             <Table
                 columns={columns}
-                dataSource={data}
-                bordered
+                dataSource={processedData}
                 pagination={false}
+                bordered
             />
         </div>
     );
 };
 
-export default StudentGradesOvrTable;
+export default StudentGradeOvr;

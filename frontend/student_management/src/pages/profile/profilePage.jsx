@@ -1,7 +1,9 @@
+import StudentDetailPage from "../students/studentDetailPage";
+
 const ProfilePage = () => {
     return (
         <>
-            <div>ProfilePage</div>
+            <StudentDetailPage />
         </>
     );
 };

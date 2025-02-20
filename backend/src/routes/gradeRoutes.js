@@ -18,7 +18,11 @@ router.post(
 //     authMiddleware(["admin", "manager"]),
 //     gradeController.getGradeById
 // );
-router.get("/student/:studentId", gradeController.getGradesByStudent);
+router.get(
+    "/student/:studentId",
+    authMiddleware(["admin", "manager", "student"]),
+    gradeController.getGradesByStudent
+);
 router.put(
     "/:id",
     authMiddleware(["admin", "manager"]),

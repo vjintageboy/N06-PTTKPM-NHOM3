@@ -24,7 +24,7 @@ const getStudents = async () => {
 
 // Lấy thông tin sinh viên theo ID
 const getStudentById = async (studentId) => {
-    return await Student.findById(studentId).populate("department");
+    return await Student.findById(studentId).populate("department", "name");
     // .populate("grades");
 };
 

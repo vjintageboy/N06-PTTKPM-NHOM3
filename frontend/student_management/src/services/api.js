@@ -138,3 +138,9 @@ export const cancelRegistration = (subjectId) => {
         data: { subjectId },
     });
 };
+
+// grades
+
+export const getGradeOfStudent = (studentID) => {
+    return axios.get(`/api/grades/student/${studentID}`);
+};
