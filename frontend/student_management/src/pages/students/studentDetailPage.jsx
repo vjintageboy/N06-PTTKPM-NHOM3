@@ -5,6 +5,7 @@ import avt from "../../assets/student-avt/male-avt.avif";
 import { Card, Row, Col, Typography, Divider } from "antd";
 import StudentGradesOvrTable from "./studentGradeOvr";
 import { UserContext } from "../../context/userContext";
+import GradeStatistics from "../../components/grades/GradeStatistics";
 
 const { Title, Text } = Typography;
 
@@ -141,6 +142,7 @@ const StudentDetailPage = () => {
                 </Row>
                 <Divider style={{ borderTop: "3px solid #e56429" }} />
             </Card>
+            <GradeStatistics studentId={slug} />
             <StudentGradesOvrTable studentData={studentData} />
         </>
     );

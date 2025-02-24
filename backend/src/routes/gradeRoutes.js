@@ -33,5 +33,10 @@ router.delete(
     authMiddleware(["admin", "manager"]),
     gradeController.deleteGrade
 );
+router.get(
+    "/statistics/:studentId",
+    authMiddleware(["admin", "manager", "student"]),
+    gradeController.getStatistics
+);
 
 module.exports = router;

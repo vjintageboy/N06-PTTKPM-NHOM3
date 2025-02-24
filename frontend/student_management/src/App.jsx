@@ -1,13 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
 import StudentPage from "./pages/students/studentPage";
 import LoginPage from "./pages/login/loginPage";
 import RegisterPage from "./pages/register/registerPage";
 import DepartmentPage from "./pages/departments/departmentPage";
 import ProfilePage from "./pages/profile/profilePage";
-import GradePage from "./pages/grades/gradePage";
+import GradePage from "./components/grades/gradePage";
 import DashboardPage from "./pages/dashboard/dashboardPage";
 import SubjectPage from "./pages/subjects/subjectPage";
 import SideBar from "./components/sidebar/sidebar";
