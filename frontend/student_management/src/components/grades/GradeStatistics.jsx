@@ -14,6 +14,8 @@ const GradeStatistics = ({ studentId }) => {
 
         const fetchStatistics = async () => {
             const response = await getStatistics(studentId);
+            console.log(response);
+
             if (response && response.data) {
                 setStatistics(response.data);
                 setLoading(false);
@@ -27,6 +29,7 @@ const GradeStatistics = ({ studentId }) => {
 
     if (loading) return <Spin size="large" />;
     if (!statistics) return <p>Không có dữ liệu.</p>;
+    console.log(statistics);
 
     return (
         <Card title="Thống kê điểm" bordered={false}>

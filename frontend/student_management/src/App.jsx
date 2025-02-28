@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import StudentPage from "./pages/students/studentPage";
 import LoginPage from "./pages/login/loginPage";
-import RegisterPage from "./pages/register/registerPage";
 import DepartmentPage from "./pages/departments/departmentPage";
 import ProfilePage from "./pages/profile/profilePage";
 import GradePage from "./components/grades/gradePage";
@@ -12,6 +11,7 @@ import SideBar from "./components/sidebar/sidebar";
 import UserPage from "./pages/user/UserPage";
 import SubjectRegistration from "./pages/registration/SubjectRegistration";
 import StudentDetailPage from "./pages/students/studentDetailPage";
+import ProtectedRoute from "./components/protectedRoutes/ProtectedRoute";
 
 const Layout = () => {
     return (
@@ -38,7 +38,11 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Layout />,
+            element: (
+                <ProtectedRoute>
+                    <Layout />
+                </ProtectedRoute>
+            ),
             children: [
                 { index: true, element: <DashboardPage /> },
                 {
@@ -78,10 +82,6 @@ function App() {
         {
             path: "/login",
             element: <LoginPage />,
-        },
-        {
-            path: "/register",
-            element: <RegisterPage />,
         },
     ]);
     return (

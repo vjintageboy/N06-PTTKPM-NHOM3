@@ -1,5 +1,5 @@
 // src/pages/SubjectRegistration.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Table, Button, message, Popconfirm } from "antd";
 import {
     getAvailableSubjects,
@@ -7,12 +7,13 @@ import {
     registerSubject,
     cancelRegistration,
 } from "../../services/api";
+import { UserContext } from "../../context/userContext";
 
 const SubjectRegistration = () => {
     const [availableSubjects, setAvailableSubjects] = useState([]);
     const [registeredSubjects, setRegisteredSubjects] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const { user } = useContext(UserContext);
     // Hàm tải danh sách Subject chưa đăng ký
     const fetchAvailableSubjects = async () => {
         try {
@@ -28,7 +29,7 @@ const SubjectRegistration = () => {
     // Hàm tải danh sách Subject đã đăng ký
     const fetchRegisteredSubjects = async () => {
         try {
-            const data = await getRegisteredSubjects();
+            const data = await getRegisteredSubjects(user._id);
 
             setRegisteredSubjects(data.registeredCourses || []);
         } catch (error) {

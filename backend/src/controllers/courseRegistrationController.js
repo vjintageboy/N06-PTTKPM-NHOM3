@@ -23,7 +23,8 @@ exports.getAvailableCourses = async (req, res) => {
  */
 exports.getRegisteredCourses = async (req, res) => {
     try {
-        const studentId = req.user.id;
+        const { studentId } = req.params;
+
         const registeredSubjects =
             await courseRegistrationService.getRegisteredCourses(studentId);
         res.status(200).json({ registeredCourses: registeredSubjects });

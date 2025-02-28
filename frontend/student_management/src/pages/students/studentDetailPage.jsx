@@ -142,7 +142,9 @@ const StudentDetailPage = () => {
                 </Row>
                 <Divider style={{ borderTop: "3px solid #e56429" }} />
             </Card>
-            <GradeStatistics studentId={slug} />
+            <GradeStatistics
+                studentId={user.role === "student" ? user.student : slug}
+            />
             <StudentGradesOvrTable studentData={studentData} />
         </>
     );

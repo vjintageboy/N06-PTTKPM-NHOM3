@@ -13,7 +13,7 @@ router.get(
 
 // Route lấy danh sách các môn học đã đăng ký
 router.get(
-    "/registered",
+    "/registered/:studentId",
     authMiddleware(["admin", "manager", "student"]),
     courseRegistrationController.getRegisteredCourses
 );

@@ -32,7 +32,7 @@ router.get(
 );
 router.get(
     "/:id",
-    authMiddleware(["admin", "manager"]),
+    authMiddleware(["admin", "manager", "student"]),
     studentController.getStudentById
 );
 
