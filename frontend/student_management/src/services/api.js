@@ -124,17 +124,19 @@ export const getStudentById = (id) => {
 
 // register course
 
-export const getAvailableSubjects = () => {
-    return axios.get("/api/courseRegistrations/available/");
+export const getAvailableSubjects = (studentId) => {
+    return axios.get(`/api/courseRegistrations/available/${studentId}`);
 };
 export const getRegisteredSubjects = (studentId) => {
     return axios.get(`api/courseRegistrations/registered/${studentId}`);
 };
-export const registerSubject = (subjectId) => {
-    return axios.post("api/courseRegistrations/register", { subjectId });
+export const registerSubject = (studentId, subjectId) => {
+    return axios.post(`api/courseRegistrations/register/${studentId}`, {
+        subjectId,
+    });
 };
-export const cancelRegistration = (subjectId) => {
-    return axios.delete("api/courseRegistrations/cancel", {
+export const cancelRegistration = (studentId, subjectId) => {
+    return axios.delete(`api/courseRegistrations/cancel/${studentId}`, {
         data: { subjectId },
     });
 };

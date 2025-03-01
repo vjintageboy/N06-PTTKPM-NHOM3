@@ -59,7 +59,7 @@ const StudentGradeOvr = (props) => {
 
     return (
         <div style={{ padding: 20 }}>
-            {/* <Title level={4}>Bảng Điểm</Title> */}
+            <Title level={4}>Bảng Điểm</Title>
             <Table
                 columns={columns}
                 dataSource={processedData}

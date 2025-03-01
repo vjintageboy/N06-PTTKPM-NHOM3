@@ -7,7 +7,7 @@ const courseRegistrationService = require("../services/courseRegistrationService
  */
 exports.getAvailableCourses = async (req, res) => {
     try {
-        const studentId = req.user.id; // req.user được set bởi middleware auth
+        const { studentId } = req.params;
         const subjects = await courseRegistrationService.getAvailableCourses(
             studentId
         );
@@ -40,7 +40,7 @@ exports.getRegisteredCourses = async (req, res) => {
  */
 exports.registerCourse = async (req, res) => {
     try {
-        const studentId = req.user.id;
+        const { studentId } = req.params;
         // Thay đổi tên biến từ courseId thành subjectId
         const { subjectId } = req.body;
         const registeredSubject =
@@ -60,7 +60,7 @@ exports.registerCourse = async (req, res) => {
 };
 exports.cancelRegistration = async (req, res) => {
     try {
-        const studentId = req.user.id;
+        const { studentId } = req.params;
         const { subjectId } = req.body;
 
         const deletedRegistration =

@@ -17,7 +17,7 @@ const SubjectRegistration = () => {
     // Hàm tải danh sách Subject chưa đăng ký
     const fetchAvailableSubjects = async () => {
         try {
-            const data = await getAvailableSubjects();
+            const data = await getAvailableSubjects(user.student);
 
             setAvailableSubjects(data.subjects || []);
         } catch (error) {
@@ -29,7 +29,7 @@ const SubjectRegistration = () => {
     // Hàm tải danh sách Subject đã đăng ký
     const fetchRegisteredSubjects = async () => {
         try {
-            const data = await getRegisteredSubjects(user._id);
+            const data = await getRegisteredSubjects(user.student);
 
             setRegisteredSubjects(data.registeredCourses || []);
         } catch (error) {
@@ -57,10 +57,10 @@ const SubjectRegistration = () => {
     ];
 
     // Hàm đăng ký môn học
-    const handleRegister = async (subjectId) => {
+    const handleRegister = async (studentId, subjectId) => {
         setLoading(true);
         try {
-            const data = await registerSubject(subjectId);
+            const data = await registerSubject(studentId, subjectId);
             message.success(data.message || "Đăng ký thành công");
             // Cập nhật lại danh sách sau khi đăng ký
             fetchAvailableSubjects();
@@ -74,11 +74,11 @@ const SubjectRegistration = () => {
         }
     };
     // Hàm hủy đăng ký môn học
-    const handleCancelRegistration = async (subjectId) => {
+    const handleCancelRegistration = async (studentId, subjectId) => {
         setLoading(true);
 
         try {
-            const data = await cancelRegistration(subjectId);
+            const data = await cancelRegistration(studentId, subjectId);
             console.log(data);
 
             message.success(data.message || "Hủy đăng ký thành công");
@@ -118,7 +118,9 @@ const SubjectRegistration = () => {
                         description={
                             "Bạn có chắc chắn muốn đăng ký môn học này ?"
                         }
-                        onConfirm={() => handleRegister(record._id)}
+                        onConfirm={() =>
+                            handleRegister(user.student, record._id)
+                        }
                         okText="Xác nhận"
                         cancelText="Hủy"
                     >
@@ -133,7 +135,9 @@ const SubjectRegistration = () => {
                         description={
                             "Bạn có chắc chắn muốn hủy đăng ký môn học này ?"
                         }
-                        onConfirm={() => handleCancelRegistration(record._id)}
+                        onConfirm={() =>
+                            handleCancelRegistration(user.student, record._id)
+                        }
                         okText="Xác nhận"
                         cancelText="Hủy"
                     >

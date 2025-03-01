@@ -6,7 +6,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 // Route lấy danh sách các môn học chưa đăng ký
 router.get(
-    "/available",
+    "/available/:studentId",
     authMiddleware(["admin", "manager", "student"]),
     courseRegistrationController.getAvailableCourses
 );
@@ -20,13 +20,13 @@ router.get(
 
 // Route đăng ký môn học mới
 router.post(
-    "/register",
+    "/register/:studentId",
     authMiddleware(["admin", "manager", "student"]),
     courseRegistrationController.registerCourse
 );
 // Hủy đăng ký môn học
 router.delete(
-    "/cancel",
+    "/cancel/:studentId",
     authMiddleware(["admin", "manager", "student"]),
     courseRegistrationController.cancelRegistration
 );
