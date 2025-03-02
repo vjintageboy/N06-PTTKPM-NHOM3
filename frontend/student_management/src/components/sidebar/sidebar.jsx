@@ -32,7 +32,6 @@ const SideBar = (props) => {
         if (res) {
             logout();
             message.success("Đăng xuất thành công");
-            localStorage.removeItem("access_token");
             navigate("/login");
         } else {
             message.error(res.message);

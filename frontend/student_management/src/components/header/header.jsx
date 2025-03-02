@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import "./header.scss";
-import logo from "../../assets/logo.png";
 import { UserContext } from "../../context/userContext";
 import { Dropdown, Menu, message } from "antd";
 import {
@@ -19,7 +18,6 @@ const handleLogout = async (logout, navigate) => {
         if (res.success) {
             logout();
             message.success("Đăng xuất thành công");
-            localStorage.removeItem("access_token");
             navigate("/login");
         } else {
             message.error(res.message || "Đăng xuất thất bại");
@@ -61,10 +59,6 @@ const Header = () => {
     return (
         <div className="header-container">
             <div className="header-content">
-                {/* <div className="header-logo">
-                    <img src={logo} alt="Logo" />
-                    
-                </div> */}
                 <div className="user-login">
                     {user ? (
                         <Dropdown overlay={userMenu} trigger={["click"]}>

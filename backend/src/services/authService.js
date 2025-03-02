@@ -48,4 +48,21 @@ const getUserById = async (userId) => {
         throw error;
     }
 };
-module.exports = { login, getUserById };
+const changePassword = async (userId, currentPassword, newPassword) => {
+    const user = await User.findById(userId);
+    if (!user) throw new Error("Người dùng không tồn tại");
+
+    // Kiểm tra mật khẩu cũ
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) throw new Error("Mật khẩu hiện tại không đúng");
+
+    // Mã hóa mật khẩu mới
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Cập nhật mật khẩu mới
+    user.password = hashedPassword;
+    await user.save();
+
+    return { message: "Đổi mật khẩu thành công!" };
+};
+module.exports = { login, getUserById, changePassword };

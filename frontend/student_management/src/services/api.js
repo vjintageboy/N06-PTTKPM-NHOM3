@@ -10,6 +10,13 @@ export const callLogin = (email, password) => {
 export const callLogout = () => {
     return axios.post("/api/auth/logout");
 };
+export const changePassword = (userId, currentPassword, newPassword) => {
+    return axios.post("/api/auth/change-password", {
+        userId,
+        currentPassword,
+        newPassword,
+    });
+};
 // department
 export const getAllDepartment = () => {
     return axios.get("/api/departments/");

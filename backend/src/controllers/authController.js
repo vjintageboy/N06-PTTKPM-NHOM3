@@ -61,4 +61,22 @@ const logoutUser = async (req, res) => {
         });
     }
 };
-module.exports = { loginController, getCurrentUser, logoutUser };
+const changePassword = async (req, res) => {
+    try {
+        const { userId, currentPassword, newPassword } = req.body;
+        const response = await authService.changePassword(
+            userId,
+            currentPassword,
+            newPassword
+        );
+        res.json({ data: response });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+module.exports = {
+    loginController,
+    getCurrentUser,
+    logoutUser,
+    changePassword,
+};

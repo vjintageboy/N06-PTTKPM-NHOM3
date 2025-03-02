@@ -12,6 +12,7 @@ import UserPage from "./pages/user/UserPage";
 import SubjectRegistration from "./pages/registration/SubjectRegistration";
 import StudentDetailPage from "./pages/students/studentDetailPage";
 import ProtectedRoute from "./components/protectedRoutes/ProtectedRoute";
+import ChangePassword from "./pages/changePassword/ChangePassWord";
 
 const Layout = () => {
     return (
@@ -25,11 +26,9 @@ const Layout = () => {
                 border: "2px solid #ffffff", // Thêm viền nếu cần
             }}
         >
-            {/* <Header /> */}
             <SideBar>
                 <Outlet />
             </SideBar>
-            {/* <Footer /> */}
         </div>
     );
 };
@@ -82,6 +81,10 @@ function App() {
         {
             path: "/login",
             element: <LoginPage />,
+        },
+        {
+            path: "/change-password",
+            element: <ChangePassword />,
         },
     ]);
     return (
