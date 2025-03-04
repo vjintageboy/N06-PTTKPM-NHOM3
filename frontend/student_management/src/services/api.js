@@ -156,3 +156,15 @@ export const getGradeOfStudent = (studentID) => {
 export const getStatistics = (studentID) => {
     return axios.get(`/api/grades/statistics/${studentID}`);
 };
+export const updateGrade = (
+    gradeId,
+    attendanceScore,
+    midtermScore,
+    finalScore
+) => {
+    return axios.put(`/api/grades/${gradeId}`, {
+        attendanceScore,
+        midtermScore,
+        finalScore,
+    });
+};

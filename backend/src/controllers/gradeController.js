@@ -29,21 +29,6 @@ class GradeController {
             res.status(500).json({ success: false, message: error.message });
         }
     }
-    // async getGradesByStudent(req, res) {
-    //     try {
-    //         const { studentId } = req.params;
-    //         const grades = await gradeService.getGradesByStudent(studentId);
-    //         res.status(200).json({
-    //             success: true,
-    //             data: grades,
-    //         });
-    //     } catch (error) {
-    //         res.status(500).json({
-    //             success: false,
-    //             message: error.message,
-    //         });
-    //     }
-    // }
 
     async deleteGrade(req, res) {
         try {

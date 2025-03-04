@@ -6,6 +6,7 @@ import { Card, Row, Col, Typography, Divider } from "antd";
 import StudentGradesOvrTable from "./studentGradeOvr";
 import { UserContext } from "../../context/userContext";
 import GradeStatistics from "../../components/grades/GradeStatistics";
+import RegisteredCourses from "./ListSubjectRegisterd";
 
 const { Title, Text } = Typography;
 
@@ -145,7 +146,9 @@ const StudentDetailPage = () => {
             <GradeStatistics
                 studentId={user.role === "student" ? user.student : slug}
             />
+
             <StudentGradesOvrTable studentData={studentData} />
+            {/* <RegisteredCourses studentId={slug} /> */}
         </>
     );
 };

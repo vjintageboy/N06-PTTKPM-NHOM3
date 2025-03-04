@@ -73,11 +73,7 @@ const SideBar = (props) => {
                         <span>Trang chủ</span>
                         <Link to="/" />
                     </Menu.Item>
-                    <Menu.Item key="/profile" className="sideBar-item">
-                        <ProfileOutlined />
-                        <span>Profile</span>
-                        <Link to="/profile" />
-                    </Menu.Item>
+
                     {user && user.role === "admin" && (
                         <>
                             <Menu.Item
@@ -123,6 +119,11 @@ const SideBar = (props) => {
                     )}
                     {user && user.role === "student" && (
                         <>
+                            <Menu.Item key="/profile" className="sideBar-item">
+                                <ProfileOutlined />
+                                <span>Profile</span>
+                                <Link to="/profile" />
+                            </Menu.Item>
                             <Menu.Item
                                 key="/registration"
                                 className="sideBar-item"
@@ -130,11 +131,6 @@ const SideBar = (props) => {
                                 <BookOutlined />
                                 <span>đăng ký môn học</span>
                                 <Link to="/registration" />
-                            </Menu.Item>
-                            <Menu.Item key="/grades" className="sideBar-item">
-                                <BookOutlined />
-                                <span>Bảng điểm</span>
-                                <Link to="/grades" />
                             </Menu.Item>
                         </>
                     )}
