@@ -6,7 +6,7 @@ import { Card, Row, Col, Typography, Divider } from "antd";
 import StudentGradesOvrTable from "./studentGradeOvr";
 import { UserContext } from "../../context/userContext";
 import GradeStatistics from "../../components/grades/GradeStatistics";
-import RegisteredCourses from "./ListSubjectRegisterd";
+import RegisteredCourses from "./RegisterdCourse";
 
 const { Title, Text } = Typography;
 
@@ -14,6 +14,8 @@ const StudentDetailPage = () => {
     const { slug } = useParams();
     const [studentData, setStudentData] = useState({});
     const { user } = useContext(UserContext);
+    const [isAdmin, setIsAmin] = useState(false);
+
     const callStudent = async (id) => {
         const res = await getStudentById(id);
 
@@ -22,6 +24,7 @@ const StudentDetailPage = () => {
     useEffect(() => {
         if (user.role === "admin" || user.role === "manager") {
             callStudent(slug);
+            setIsAmin(true);
         } else {
             callStudent(user.student);
         }
@@ -146,9 +149,12 @@ const StudentDetailPage = () => {
             <GradeStatistics
                 studentId={user.role === "student" ? user.student : slug}
             />
-
+            {isAdmin ? (
+                <RegisteredCourses studentData={studentData} isAdmin />
+            ) : (
+                ""
+            )}
             <StudentGradesOvrTable studentData={studentData} />
-            {/* <RegisteredCourses studentId={slug} /> */}
         </>
     );
 };

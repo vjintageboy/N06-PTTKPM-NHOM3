@@ -168,3 +168,18 @@ export const updateGrade = (
         finalScore,
     });
 };
+export const addStudentGrade = (
+    student,
+    subject,
+    attendanceScore,
+    midtermScore,
+    finalScore
+) => {
+    return axios.post("/api/grades/", {
+        student,
+        subject,
+        attendanceScore,
+        midtermScore,
+        finalScore,
+    });
+};
