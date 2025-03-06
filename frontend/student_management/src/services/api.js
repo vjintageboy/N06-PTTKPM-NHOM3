@@ -92,24 +92,11 @@ export const addNewStudent = (formData) => {
     });
 };
 
-export const updateStudent = (
-    id,
-    studentID,
-    name,
-    email,
-    gender,
-    dateOfBirth,
-    department,
-    enrollmentYear
-) => {
-    return axios.put(`/api/students/${id}`, {
-        studentID,
-        name,
-        email,
-        gender,
-        dateOfBirth,
-        department,
-        enrollmentYear,
+export const updateStudent = (id, formData) => {
+    return axios.put(`/api/students/${id}`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
     });
 };
 export const deleteStudent = (id) => {

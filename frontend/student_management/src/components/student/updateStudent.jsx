@@ -7,8 +7,19 @@ import {
     Modal,
     notification,
     Select,
+    Upload,
+    Image,
 } from "antd";
 import { updateStudent } from "../../services/api";
+import { PlusOutlined } from "@ant-design/icons";
+
+const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
 
 const UpdateStudent = (props) => {
     const {
@@ -20,38 +31,67 @@ const UpdateStudent = (props) => {
     } = props;
 
     const [isSubmit, setIsSubmit] = useState(false);
-
-    // https://ant.design/components/form#components-form-demo-control-hooks
     const [form] = Form.useForm();
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState("");
+    const [fileList, setFileList] = useState([]);
+
+    useEffect(() => {
+        form.setFieldsValue(dataUpdate);
+
+        if (dataUpdate?.image) {
+            setFileList([
+                {
+                    uid: "-1",
+                    name: "avatar.png",
+                    status: "done",
+                    url: `http://localhost:8081${dataUpdate.image}`,
+                    originFileObj: null, // Thêm vào để không làm mất ảnh cũ
+                },
+            ]);
+        }
+    }, [dataUpdate]);
+
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+    };
+
+    const handleChange = ({ fileList: newFileList }) =>
+        setFileList(newFileList);
+
+    const uploadButton = (
+        <button style={{ border: 0, background: "none" }} type="button">
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </button>
+    );
 
     const onFinish = async (values) => {
-        const {
-            id,
-            studentID,
-            name,
-            email,
-            gender,
-            dateOfBirth,
-            department,
-            enrollmentYear,
-        } = values;
         setIsSubmit(true);
         console.log(values);
-        const res = await updateStudent(
-            id,
-            studentID,
-            name,
-            email,
-            gender,
-            dateOfBirth,
-            department,
-            enrollmentYear
-        );
 
+        const formData = new FormData();
+        formData.append("studentID", values.studentID);
+        formData.append("name", values.name);
+        formData.append("email", values.email);
+        formData.append("gender", values.gender);
+        formData.append("dateOfBirth", values.dateOfBirth);
+        formData.append("department", values.department);
+        formData.append("enrollmentYear", values.enrollmentYear);
+        if (fileList) {
+            formData.append("image", fileList[0].originFileObj); // Gửi file ảnh
+        }
+
+        const res = await updateStudent(dataUpdate.id, formData);
         if (res && res.data) {
             message.success("Cập nhật sinh viên thành công");
             form.resetFields();
             setOpenModalUpdate(false);
+
             fetchStudents();
         } else {
             notification.error({
@@ -61,46 +101,26 @@ const UpdateStudent = (props) => {
         }
         setIsSubmit(false);
     };
-    useEffect(() => {
-        form.setFieldsValue(dataUpdate);
-    }, [dataUpdate]);
 
     return (
         <>
             <Modal
                 title="Cập nhật sinh viên"
                 open={openModalUpdate}
-                onOk={() => {
-                    form.submit();
-                }}
+                onOk={() => form.submit()}
                 onCancel={() => setOpenModalUpdate(false)}
-                okText={"Lưu"}
-                cancelText={"Hủy"}
+                okText="Lưu"
+                cancelText="Hủy"
                 confirmLoading={isSubmit}
             >
                 <Divider />
 
                 <Form
                     form={form}
-                    name="basic"
-                    style={{ maxWidth: 600 }}
+                    name="updateStudent"
                     onFinish={onFinish}
                     autoComplete="off"
                 >
-                    <Form.Item
-                        labelCol={{ span: 24 }}
-                        label="ID"
-                        name="id"
-                        hidden
-                        rules={[
-                            {
-                                required: true,
-                                message: "Vui lòng nhập ID!",
-                            },
-                        ]}
-                    >
-                        <Input disabled />
-                    </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Mã sinh viên"
@@ -127,16 +147,12 @@ const UpdateStudent = (props) => {
                     >
                         <Input />
                     </Form.Item>
-
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="email"
+                        label="Email"
                         name="email"
                         rules={[
-                            {
-                                required: true,
-                                message: "Vui lòng nhập email!",
-                            },
+                            { required: true, message: "Vui lòng nhập email!" },
                         ]}
                     >
                         <Input />
@@ -157,7 +173,6 @@ const UpdateStudent = (props) => {
                             <Select.Option value="female">Nữ</Select.Option>
                         </Select>
                     </Form.Item>
-
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Ngày sinh"
@@ -176,13 +191,10 @@ const UpdateStudent = (props) => {
                         label="Khoa"
                         name="department"
                         rules={[
-                            {
-                                required: true,
-                                message: "Vui lòng nhập chọn khoa!",
-                            },
+                            { required: true, message: "Vui lòng chọn khoa!" },
                         ]}
                     >
-                        <Select placeholder="Select department">
+                        <Select placeholder="Chọn khoa">
                             {departments.map((department) => (
                                 <Select.Option
                                     key={department._id}
@@ -205,6 +217,26 @@ const UpdateStudent = (props) => {
                         ]}
                     >
                         <Input type="number" />
+                    </Form.Item>
+                    <Form.Item label="Ảnh sinh viên">
+                        <Upload
+                            listType="picture-circle"
+                            fileList={fileList}
+                            onPreview={handlePreview}
+                            onChange={handleChange}
+                            beforeUpload={() => false} // Không tải lên ngay lập tức
+                        >
+                            {fileList.length === 1 ? null : uploadButton}
+                        </Upload>
+                        {previewImage && (
+                            <Image
+                                preview={{
+                                    visible: previewOpen,
+                                    onVisibleChange: setPreviewOpen,
+                                }}
+                                src={previewImage}
+                            />
+                        )}
                     </Form.Item>
                 </Form>
             </Modal>

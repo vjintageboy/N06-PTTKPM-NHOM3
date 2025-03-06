@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./sidebar.scss";
 import {
     MenuFoldOutlined,
@@ -27,6 +27,7 @@ const SideBar = (props) => {
     } = theme.useToken();
     const navigate = useNavigate();
     const { user, logout } = useContext(UserContext);
+    const [image, setImage] = useState(null);
     const handleLogout = async () => {
         const res = await callLogout();
         if (res) {
@@ -37,6 +38,13 @@ const SideBar = (props) => {
             message.error(res.message);
         }
     };
+    useEffect(() => {
+        if (user.role === "student") {
+            setImage(`http://localhost:8081${user.student.image}`);
+        } else {
+            setImage(avt);
+        }
+    }, []);
     const currentPath = location.pathname.split("/")[1];
     return (
         <Layout>
@@ -56,7 +64,7 @@ const SideBar = (props) => {
                     style={{ backgroundColor: "transparent" }}
                 >
                     <Menu.Item className="sideBar-item avatar">
-                        <Avatar size={50} src={avt} />
+                        <Avatar size={50} src={image} />
                         <span
                             style={{
                                 paddingLeft: "15px",

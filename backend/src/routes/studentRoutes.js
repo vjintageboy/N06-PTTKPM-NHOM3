@@ -20,6 +20,7 @@ router.get(
 router.put(
     "/:id",
     authMiddleware(["admin", "manager"]),
+    upload.single("image"),
     studentController.updateStudent
 );
 router.delete(

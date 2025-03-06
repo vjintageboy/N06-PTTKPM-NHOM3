@@ -69,6 +69,12 @@ const StudentTable = () => {
             dataIndex: "enrollmentYear",
             key: "enrollmentYear",
         },
+        {
+            title: "Ảnh",
+            dataIndex: "image",
+            key: "image",
+            hidden: true,
+        },
 
         {
             title: "Action",
@@ -132,6 +138,7 @@ const StudentTable = () => {
             dateOfBirth: student.dateOfBirth,
             department: student.department ? student.department.name : "",
             enrollmentYear: student.enrollmentYear,
+            image: student.image,
         };
     });
     useEffect(() => {

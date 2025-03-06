@@ -5,7 +5,7 @@ const User = require("../models/User");
 const login = async (email, password) => {
     try {
         // Tìm user trong cơ sở dữ liệu
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate("student", "image");
         if (!user) {
             return {
                 success: false,

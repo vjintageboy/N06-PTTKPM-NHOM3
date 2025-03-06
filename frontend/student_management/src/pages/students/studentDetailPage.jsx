@@ -26,7 +26,7 @@ const StudentDetailPage = () => {
             callStudent(slug);
             setIsAmin(true);
         } else {
-            callStudent(user.student);
+            callStudent(user.student._id);
         }
     }, []);
 
@@ -150,7 +150,7 @@ const StudentDetailPage = () => {
                 <Divider style={{ borderTop: "3px solid #e56429" }} />
             </Card>
             <GradeStatistics
-                studentId={user.role === "student" ? user.student : slug}
+                studentId={user.role === "student" ? user.student._id : slug}
             />
             {isAdmin ? (
                 <RegisteredCourses studentData={studentData} isAdmin />

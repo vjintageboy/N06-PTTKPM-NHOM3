@@ -48,10 +48,21 @@ const getStudentById = async (req, res) => {
 // Cập nhật thông tin sinh viên
 const updateStudent = async (req, res) => {
     try {
+        // Kiểm tra nếu có file ảnh
+        console.log("Received data:", req.body); // Kiểm tra dữ liệu nhận được
+        console.log("Received file:", req.file); // Kiểm tra file ảnh nhận được
+        let imageUrl = null;
+        if (req.file) {
+            imageUrl = `/uploads/${req.file.filename}`;
+        }
         const updatedStudent = await studentService.updateStudent(
             req.params.id,
-            req.body
+            {
+                ...req.body,
+                image: imageUrl,
+            }
         );
+
         if (!updatedStudent)
             return res.status(404).json({ message: "Student not found" });
 
