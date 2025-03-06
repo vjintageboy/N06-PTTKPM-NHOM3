@@ -84,25 +84,14 @@ export const deleteSubject = (id) => {
 export const getAllStudent = () => {
     return axios.get("/api/students/");
 };
-export const addNewStudent = (
-    studentID,
-    name,
-    email,
-    gender,
-    dateOfBirth,
-    department,
-    enrollmentYear
-) => {
-    return axios.post("/api/students/", {
-        studentID,
-        name,
-        email,
-        gender,
-        dateOfBirth,
-        department,
-        enrollmentYear,
+export const addNewStudent = (formData) => {
+    return axios.post("/api/students/", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
     });
 };
+
 export const updateStudent = (
     id,
     studentID,

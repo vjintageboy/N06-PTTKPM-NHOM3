@@ -31,7 +31,7 @@ const StudentDetailPage = () => {
     }, []);
 
     const student = {
-        avatar: `${avt}`,
+        avatar: `http://localhost:8081${studentData.image}`,
         studentId: `${studentData.studentID}`,
         fullName: "Nguyễn Cao",
         firstName: `${studentData.name}`,
@@ -61,7 +61,10 @@ const StudentDetailPage = () => {
                         <img
                             src={student.avatar}
                             alt="avatar"
-                            style={{ width: "100%", borderRadius: "8px" }}
+                            style={{
+                                width: "100%",
+                                borderRadius: "8px",
+                            }}
                         />
                     </Col>
                     <Col span={18}>

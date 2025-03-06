@@ -7,40 +7,79 @@ import {
     Modal,
     notification,
     Select,
+    Upload,
+    Image,
 } from "antd";
 import { addNewStudent } from "../../services/api";
+import { PlusOutlined } from "@ant-design/icons";
 
+const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
 const AddNewStudent = (props) => {
     const { openModalCreate, setOpenModalCreate, fetchStudents, departments } =
         props;
 
     const [isSubmit, setIsSubmit] = useState(false);
-
-    // https://ant.design/components/form#components-form-demo-control-hooks
     const [form] = Form.useForm();
 
-    const onFinish = async (values) => {
-        const {
-            studentID,
-            name,
-            email,
-            gender,
-            dateOfBirth,
-            department,
-            enrollmentYear,
-        } = values;
-        setIsSubmit(true);
-        const res = await addNewStudent(
-            studentID,
-            name,
-            email,
-            gender,
-            dateOfBirth,
-            department,
-            enrollmentYear
-        );
-        console.log(values);
+    // State để lưu ảnh
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState("");
+    const [fileList, setFileList] = useState([]);
 
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+    };
+    const handleChange = ({ fileList: newFileList }) =>
+        setFileList(newFileList);
+    const uploadButton = (
+        <button
+            style={{
+                border: 0,
+                background: "none",
+            }}
+            type="button"
+        >
+            <PlusOutlined />
+            <div
+                style={{
+                    marginTop: 8,
+                }}
+            >
+                Upload
+            </div>
+        </button>
+    );
+
+    // Hàm xử lý khi submit form
+    const onFinish = async (values) => {
+        setIsSubmit(true);
+
+        // Tạo formData để gửi lên server
+        const formData = new FormData();
+        formData.append("studentID", values.studentID);
+        formData.append("name", values.name);
+        formData.append("email", values.email);
+        formData.append("gender", values.gender);
+        formData.append("dateOfBirth", values.dateOfBirth);
+        formData.append("department", values.department);
+        formData.append("enrollmentYear", values.enrollmentYear);
+        if (fileList) {
+            formData.append("image", fileList[0].originFileObj); // Gửi file ảnh
+            console.log(fileList);
+        }
+
+        // Gọi API
+        const res = await addNewStudent(formData);
         if (res && res.data) {
             message.success("Tạo mới sinh viên thành công");
             form.resetFields();
@@ -90,6 +129,7 @@ const AddNewStudent = (props) => {
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Tên sinh viên"
@@ -106,7 +146,7 @@ const AddNewStudent = (props) => {
 
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        label="email"
+                        label="Email"
                         name="email"
                         rules={[
                             {
@@ -117,6 +157,7 @@ const AddNewStudent = (props) => {
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Giới tính"
@@ -133,6 +174,7 @@ const AddNewStudent = (props) => {
                             <Select.Option value="female">Nữ</Select.Option>
                         </Select>
                     </Form.Item>
+
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Ngày sinh"
@@ -146,6 +188,7 @@ const AddNewStudent = (props) => {
                     >
                         <Input type="date" />
                     </Form.Item>
+
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Khoa"
@@ -153,11 +196,11 @@ const AddNewStudent = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập chọn khoa!",
+                                message: "Vui lòng chọn khoa!",
                             },
                         ]}
                     >
-                        <Select placeholder="Select department">
+                        <Select placeholder="Chọn khoa">
                             {departments.map((department) => (
                                 <Select.Option
                                     key={department._id}
@@ -168,6 +211,7 @@ const AddNewStudent = (props) => {
                             ))}
                         </Select>
                     </Form.Item>
+
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Năm nhập học"
@@ -180,6 +224,34 @@ const AddNewStudent = (props) => {
                         ]}
                     >
                         <Input type="number" />
+                    </Form.Item>
+
+                    {/* Upload ảnh */}
+                    <Form.Item label="Ảnh sinh viên">
+                        <Upload
+                            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                            listType="picture-circle"
+                            fileList={fileList}
+                            onPreview={handlePreview}
+                            onChange={handleChange}
+                        >
+                            {fileList.length == 1 ? null : uploadButton}
+                        </Upload>
+                        {previewImage && (
+                            <Image
+                                wrapperStyle={{
+                                    display: "none",
+                                }}
+                                preview={{
+                                    visible: previewOpen,
+                                    onVisibleChange: (visible) =>
+                                        setPreviewOpen(visible),
+                                    afterOpenChange: (visible) =>
+                                        !visible && setPreviewImage(""),
+                                }}
+                                src={previewImage}
+                            />
+                        )}
                     </Form.Item>
                 </Form>
             </Modal>
