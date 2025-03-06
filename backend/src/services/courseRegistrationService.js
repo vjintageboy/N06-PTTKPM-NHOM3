@@ -17,7 +17,7 @@ exports.getAvailableCourses = async (studentId) => {
     // Tìm các môn học (subject) mà _id không nằm trong danh sách đăng ký
     const availableSubjects = await Subject.find({
         _id: { $nin: registeredSubjectIds },
-    });
+    }).populate("department", "name");
     return availableSubjects;
 };
 
@@ -30,7 +30,10 @@ exports.getRegisteredCourses = async (studentId) => {
     // Tìm các đăng ký của sinh viên và populate thông tin subject
     const registrations = await CourseRegistration.find({
         student: studentId,
-    }).populate("subject");
+    }).populate({
+        path: "subject",
+        populate: { path: "department", select: "name" }, // Lấy thêm department.name
+    });
     // Trích xuất thông tin môn học từ các đăng ký
     const registeredSubjects = registrations.map((reg) => reg.subject);
     return registeredSubjects;

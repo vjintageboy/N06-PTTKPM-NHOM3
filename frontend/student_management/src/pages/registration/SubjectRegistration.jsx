@@ -99,7 +99,12 @@ const SubjectRegistration = () => {
     const columns = [
         { title: "Mã môn học", dataIndex: "code", key: "code" },
         { title: "Tên môn học", dataIndex: "name", key: "name" },
-        { title: "Khoa", dataIndex: "department", key: "department" },
+        {
+            title: "Khoa",
+            dataIndex: "department",
+            key: "department",
+            render: (department) => department?.name || "Không xác định",
+        },
         { title: "Số tín chỉ", dataIndex: "credits", key: "credits" },
         {
             title: "Trạng thái",
