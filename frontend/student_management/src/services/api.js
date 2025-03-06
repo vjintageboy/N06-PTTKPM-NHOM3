@@ -88,6 +88,7 @@ export const addNewStudent = (
     studentID,
     name,
     email,
+    gender,
     dateOfBirth,
     department,
     enrollmentYear
@@ -96,6 +97,7 @@ export const addNewStudent = (
         studentID,
         name,
         email,
+        gender,
         dateOfBirth,
         department,
         enrollmentYear,
@@ -106,6 +108,7 @@ export const updateStudent = (
     studentID,
     name,
     email,
+    gender,
     dateOfBirth,
     department,
     enrollmentYear
@@ -114,6 +117,7 @@ export const updateStudent = (
         studentID,
         name,
         email,
+        gender,
         dateOfBirth,
         department,
         enrollmentYear,

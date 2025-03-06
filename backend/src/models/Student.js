@@ -48,6 +48,17 @@ const studentSchema = new mongoose.Schema(
             enum: ["active", "graduated", "dropped out"],
             default: "active",
         },
+        // ✅ Thêm avatar (ảnh đại diện)
+        image: {
+            type: String,
+            default: "https://via.placeholder.com/150", // Ảnh mặc định nếu chưa có
+        },
+        // ✅ Thêm giới tính
+        gender: {
+            type: String,
+            enum: ["male", "female", "other"],
+            default: "other", // Tránh lỗi nếu dữ liệu cũ không có
+        },
     },
     {
         timestamps: true, // Tự động thêm createdAt và updatedAt

@@ -50,6 +50,11 @@ const StudentTable = () => {
             key: "email",
         },
         {
+            title: "Giới tính",
+            dataIndex: "gender",
+            key: "gender",
+        },
+        {
             title: "Ngày sinh",
             dataIndex: "dateOfBirth",
             key: "dateOfBirth",
@@ -123,6 +128,7 @@ const StudentTable = () => {
             studentID: student.studentID,
             name: student.name,
             email: student.email,
+            gender: student.gender === "male" ? "Nam" : "Nữ",
             dateOfBirth: student.dateOfBirth,
             department: student.department ? student.department.name : "",
             enrollmentYear: student.enrollmentYear,

@@ -24,6 +24,7 @@ const AddNewStudent = (props) => {
             studentID,
             name,
             email,
+            gender,
             dateOfBirth,
             department,
             enrollmentYear,
@@ -33,6 +34,7 @@ const AddNewStudent = (props) => {
             studentID,
             name,
             email,
+            gender,
             dateOfBirth,
             department,
             enrollmentYear
@@ -114,6 +116,22 @@ const AddNewStudent = (props) => {
                         ]}
                     >
                         <Input />
+                    </Form.Item>
+                    <Form.Item
+                        labelCol={{ span: 24 }}
+                        label="Giới tính"
+                        name="gender"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng chọn giới tính!",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Chọn giới tính">
+                            <Select.Option value="male">Nam</Select.Option>
+                            <Select.Option value="female">Nữ</Select.Option>
+                        </Select>
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}

@@ -11,6 +11,7 @@ const subjectRoutes = require("./routes/subjectRoutes");
 const gradeRoutes = require("./routes/gradeRoutes");
 const courseRegistrationRoutes = require("./routes/courseRegistrationRoutes");
 const cors = require("cors");
+const path = require("path");
 
 app.get("/", (req, res) => {
     res.send("Hello World! abcd");
@@ -27,6 +28,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

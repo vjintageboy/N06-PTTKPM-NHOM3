@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const studentController = require("../controllers/studentController");
 const authMiddleware = require("../middleware/authMiddleware");
+const upload = require("../middleware/upload");
 
 // Các route quản lý sinh viên
 router.post(
     "/",
     authMiddleware(["admin", "manager"]),
+    upload.single("image"),
     studentController.addStudent
 );
 router.get(

@@ -1,9 +1,18 @@
 const studentService = require("../services/studentService");
+const multer = require("multer");
 
 // Thêm sinh viên mới
 const addStudent = async (req, res) => {
     try {
-        const newStudent = await studentService.addStudent(req.body);
+        // Kiểm tra nếu có file ảnh
+        let imageUrl = null;
+        if (req.file) {
+            imageUrl = `/uploads/${req.file.filename}`;
+        }
+        const newStudent = await studentService.addStudent({
+            ...req.body,
+            image: imageUrl, // Lưu đường dẫn ảnh
+        });
         res.status(201).json({
             message: "Student added successfully",
             data: newStudent,

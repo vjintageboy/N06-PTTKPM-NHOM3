@@ -30,6 +30,7 @@ const UpdateStudent = (props) => {
             studentID,
             name,
             email,
+            gender,
             dateOfBirth,
             department,
             enrollmentYear,
@@ -41,13 +42,14 @@ const UpdateStudent = (props) => {
             studentID,
             name,
             email,
+            gender,
             dateOfBirth,
             department,
             enrollmentYear
         );
 
         if (res && res.data) {
-            message.success("Cập nhật môn học thành công");
+            message.success("Cập nhật sinh viên thành công");
             form.resetFields();
             setOpenModalUpdate(false);
             fetchStudents();
@@ -89,6 +91,7 @@ const UpdateStudent = (props) => {
                         labelCol={{ span: 24 }}
                         label="ID"
                         name="id"
+                        hidden
                         rules={[
                             {
                                 required: true,
@@ -96,7 +99,7 @@ const UpdateStudent = (props) => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled />
                     </Form.Item>
                     <Form.Item
                         labelCol={{ span: 24 }}
@@ -138,6 +141,23 @@ const UpdateStudent = (props) => {
                     >
                         <Input />
                     </Form.Item>
+                    <Form.Item
+                        labelCol={{ span: 24 }}
+                        label="Giới tính"
+                        name="gender"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Vui lòng chọn giới tính!",
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Chọn giới tính">
+                            <Select.Option value="male">Nam</Select.Option>
+                            <Select.Option value="female">Nữ</Select.Option>
+                        </Select>
+                    </Form.Item>
+
                     <Form.Item
                         labelCol={{ span: 24 }}
                         label="Ngày sinh"

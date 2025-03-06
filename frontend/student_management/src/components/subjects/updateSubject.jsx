@@ -73,6 +73,7 @@ const UpdateSubject = (props) => {
                         labelCol={{ span: 24 }}
                         label="ID"
                         name="id"
+                        hidden
                         rules={[
                             {
                                 required: true,
