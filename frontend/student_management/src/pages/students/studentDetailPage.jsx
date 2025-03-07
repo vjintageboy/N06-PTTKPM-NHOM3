@@ -35,7 +35,7 @@ const StudentDetailPage = () => {
         studentId: `${studentData.studentID}`,
         fullName: "Nguyễn Cao",
         firstName: `${studentData.name}`,
-        gender: "Nam",
+        gender: studentData.gender === "male" ? "Nam" : "Nữ",
         birthDate: `${studentData.dateOfBirth}`,
         email: `${studentData.email}`,
         class: "K16-CNTT_4",

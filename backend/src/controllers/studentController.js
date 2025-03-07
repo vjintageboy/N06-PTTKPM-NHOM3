@@ -51,7 +51,14 @@ const updateStudent = async (req, res) => {
         // Kiểm tra nếu có file ảnh
         console.log("Received data:", req.body); // Kiểm tra dữ liệu nhận được
         console.log("Received file:", req.file); // Kiểm tra file ảnh nhận được
-        let imageUrl = null;
+        const existingStudent = await studentService.getStudentById(
+            req.params.id
+        );
+        if (!existingStudent) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        let imageUrl = existingStudent.image;
         if (req.file) {
             imageUrl = `/uploads/${req.file.filename}`;
         }

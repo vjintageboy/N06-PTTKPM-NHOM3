@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
     deleteStudent,
     getAllDepartment,
@@ -14,6 +14,7 @@ import {
 import AddNewStudent from "./addnewStudent";
 import UpdateStudent from "./updateStudent";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 const StudentTable = () => {
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
@@ -21,6 +22,7 @@ const StudentTable = () => {
     const [listStudents, setListStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [departments, setDepartmemts] = useState([]);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     const viewDetailStudent = (id) => {
@@ -114,13 +116,30 @@ const StudentTable = () => {
     const fetchStudents = async () => {
         const res = await getAllStudent();
         if (res.data) {
-            setListStudents(res.data);
+            let students = res.data;
+
+            // Nếu user là manager, chỉ lấy sinh viên thuộc khoa của họ
+            if (user.role === "manager") {
+                students = students.filter(
+                    (student) => student.department?._id === user.department
+                );
+            }
+
+            setListStudents(students);
         }
     };
     const fetchDepartments = async () => {
         const res = await getAllDepartment();
         if (res.data) {
-            setDepartmemts(res.data);
+            let departments = res.data;
+
+            // Nếu user là manager, chỉ hiển thị khoa của họ
+            if (user.role === "manager") {
+                departments = departments.filter(
+                    (dept) => dept._id === user.department
+                );
+            }
+            setDepartmemts(departments);
         }
     };
     const handleDelete = async (id) => {
@@ -144,6 +163,7 @@ const StudentTable = () => {
     useEffect(() => {
         fetchStudents();
         fetchDepartments();
+        console.log(departments);
     }, []);
     return (
         <>

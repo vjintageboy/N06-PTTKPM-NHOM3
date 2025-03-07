@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
     getAllSubjects,
     deleteSubject,
@@ -8,6 +8,7 @@ import { Button, Input, Popconfirm, Table } from "antd";
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
 import AddNewSubject from "./addNewSubject";
 import UpdateSubject from "./updateSubject";
+import { UserContext } from "../../context/userContext";
 const SubjectTable = () => {
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
@@ -15,6 +16,7 @@ const SubjectTable = () => {
     const [listSubjects, setListSubjects] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [departments, setDepartmemts] = useState([]);
+    const { user } = useContext(UserContext);
     const columns = [
         {
             title: "ID",
@@ -75,13 +77,29 @@ const SubjectTable = () => {
     const fetchSubjects = async () => {
         const res = await getAllSubjects();
         if (res.data) {
-            setListSubjects(res.data);
+            let subjects = res.data;
+            if (user.role === "manager") {
+                subjects = subjects.filter(
+                    (subject) => subject.department?._id === user.department
+                );
+            }
+            setListSubjects(subjects);
         }
     };
     const fetchDepartments = async () => {
         const res = await getAllDepartment();
         if (res.data) {
-            setDepartmemts(res.data);
+            if (res.data) {
+                let departments = res.data;
+
+                // Nếu user là manager, chỉ hiển thị khoa của họ
+                if (user.role === "manager") {
+                    departments = departments.filter(
+                        (dept) => dept._id === user.department
+                    );
+                }
+                setDepartmemts(departments);
+            }
         }
     };
     const handleDelete = async (id) => {

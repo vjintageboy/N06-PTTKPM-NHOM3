@@ -7,7 +7,7 @@ const departmentController = require("../controllers/departmentController");
 // Routes cho các chức năng CRUD Khoa
 router.get(
     "/",
-    authMiddleware(["admin"]),
+    authMiddleware(["admin", "manager"]),
     departmentController.getAllDepartments
 ); // Lấy danh sách tất cả khoa
 // router.get(
