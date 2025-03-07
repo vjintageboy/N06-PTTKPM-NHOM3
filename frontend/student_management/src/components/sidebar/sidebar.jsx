@@ -9,6 +9,7 @@ import {
     UserOutlined,
     HomeOutlined,
     LogoutOutlined,
+    ScheduleOutlined
 } from "@ant-design/icons";
 import { Avatar, Button, Layout, Menu, message, Popconfirm, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
@@ -139,6 +140,14 @@ const SideBar = (props) => {
                                 <BookOutlined />
                                 <span>đăng ký môn học</span>
                                 <Link to="/registration" />
+                            </Menu.Item>
+                            <Menu.Item
+                                key="/calendar"
+                                className="sideBar-item"
+                            >
+                                <ScheduleOutlined />
+                                <span>Lịch học/Lịch thi</span>
+                                <Link to="/calendar" />
                             </Menu.Item>
                         </>
                     )}

@@ -13,6 +13,7 @@ import SubjectRegistration from "./pages/registration/SubjectRegistration";
 import StudentDetailPage from "./pages/students/studentDetailPage";
 import ProtectedRoute from "./components/protectedRoutes/ProtectedRoute";
 import ChangePassword from "./pages/changePassword/ChangePassWord";
+import CalendarPage from "./pages/calendar/CalendarPage";
 
 const Layout = () => {
     return (
@@ -76,6 +77,10 @@ function App() {
                     path: "registration",
                     element: <SubjectRegistration />,
                 },
+                {
+                    path: "calendar",
+                    element: <CalendarPage/>
+                }
             ],
         },
         {
