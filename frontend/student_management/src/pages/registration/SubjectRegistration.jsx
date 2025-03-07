@@ -142,7 +142,7 @@ const SubjectRegistration = () => {
                         }
                         onConfirm={() =>
                             handleCancelRegistration(
-                                user.student_id,
+                                user.student._id,
                                 record._id
                             )
                         }
